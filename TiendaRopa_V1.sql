@@ -74,6 +74,9 @@ CONSTRAINT FK_cliente_persona FOREIGN KEY (id_persona) REFERENCES Personas(idPer
 CONSTRAINT FK_cliente_profesion FOREIGN KEY (id_profesion) REFERENCES Profesiones(idProfesion)
 );
 
+ALTER TABLE Clientes
+ADD Tipo_Mayoritario bit;
+
 CREATE TABLE Empleados(
 id_empleado INTEGER PRIMARY KEY,
 id_persona INTEGER NOT NULL,
@@ -152,6 +155,11 @@ CREATE TABLE Productos(
 	CONSTRAINT FK_id_detalle_ropa FOREIGN KEY (detalle) REFERENCES DetallesRopa(id_detalle),
 	)
 
+CREATE TABLE Descuento(
+	id_descuento INTEGER PRIMARY KEY,
+	descuentto DECIMAL(5,2)
+	)
+
 CREATE TABLE Bodega(
 	id_bodega INTEGER PRIMARY KEY,
 	id_seccion INTEGER IDENTITY,
@@ -197,6 +205,14 @@ CREATE TABLE detalle_compra(
 	CONSTRAINT FK_Producto FOREIGN KEY (producto) REFERENCES Productos(codigo_barras)
 	);
 
+CREATE TABLE Producto_mas_vendido(
+	id_mes INTEGER PRIMARY KEY,
+	id_Producto VARCHAR (20) NOT NULL,
+	mes INTEGER NOT NULL,
+	anio INTEGER NOT NULL,
+	cantidad INTEGER NOT NULL,
+	CONSTRAINT fk_id_producto_mas_vendido FOREIGN KEY (id_producto) REFERENCES productos(codigo_barras)
+	)
 
 --INSERTS
 INSERT INTO Paises(descripcion) VALUES('Honduras'), ('Costa Rica'),('Panamá'),('Nicaragua'),('EL Salvador');
