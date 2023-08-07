@@ -211,4 +211,15 @@ CREATE TABLE detalle_compra(
 	);
 
 
+--INSERTS
+INSERT INTO Paises(descripcion) VALUES('Honduras'), ('Costa Rica'),('Panamá'),('Nicaragua'),('EL Salvador');
+INSERT INTO Departamentos(idPais,descripcion) VALUES(1,'Francisco Morazn'), (5,'San Salvador'),(1,'Atlantida'),(1,'Cortes'),(2,'San jose');
+INSERT INTO Municipios(idDepto,decripcion) VALUES(1,'Tegucigalpa'),(1,'Talanga'),(4,'San Pedro Sula'),(4,'Choloma'),(4,'Omoa');
+INSERT INTO Generos(descripcion) VALUES('Masculino'),('Femenino'),('Otro');
+INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES (1,1,'Walter', 'White','Heisenberg','Targaryen','1980-06-01','BRB@gmail.com');
+INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES  (1,1,'Pedro', 'Pica','Piedra','Roca','2000-06-01','pedro@gmail.com');
+INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES (1,2,'Loenel', 'Andres','Messi','Ronaldo','1999-06-01','messi@gmail.com');
+INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES(1,1,'Jonh', 'Snow','Aegon','Targaryen','1999-06-01','GOT@gmail.com');
+INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES(1,4,'Daenerys ', 'Tormenta','Targaryen','Lopez','1998-06-01','GOTa@gmail.com');
+INSERT INTO Profesiones(descripcion,comentarios)VALUES('Abogado',''),('Ingeniero en Sistemas','que pro'),('Maestro',''),('Futbolista',''),('Arquitecto','');
 
