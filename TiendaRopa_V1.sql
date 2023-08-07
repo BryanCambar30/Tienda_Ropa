@@ -226,3 +226,29 @@ INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S
 INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES(1,4,'Daenerys ', 'Tormenta','Targaryen','Lopez','1998-06-01','GOTa@gmail.com');
 INSERT INTO Profesiones(descripcion,comentarios)VALUES('Abogado',''),('Ingeniero en Sistemas','que pro'),('Maestro',''),('Futbolista',''),('Arquitecto','');
 
+INSERT INTO Colores(descripcion)VALUES('Azul'),('Verde'),('Amarillo'),('Rojo'),('Negro');
+INSERT INTO Tallas(descripcion)VALUES('xs'),('s'),('m'),('l'),('xl'),('xxl'),('xxxl'),('xxs');
+INSERT INTO GeneroRopa(descripcion)VALUES('Femenino'),('Masculino'),('bebe'),('unisex');
+INSERT INTO Tipos(descripcion)VALUES('Camisa Formal'),('Camisa Polo'),('Camiseta'),('Pantalon Formal'),('Pantalon Mesclilla');
+INSERT INTO Marcas(descripcion)VALUES('Nike'),('Adidas'),('Flamingo'),('Joma'),('Ralph Lauren');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'El General FM', '22909001', '0801-1903-229011', 'elGeneral@gmail.com');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'Salvatore Style', '28909090', '9809-1903-229011', 'Salvatorel@gmail.com');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'PieceArts', '22905555', '0819-1903-229011', 'PieceArts@gmail.com');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'CautionStyle', '22955551', '0801-1903-229331', 'CautionS@gmail.com');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(4, 'Leopoldo', '22908501', '0801-1903-222220', 'Leopoldo@gmail.com');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 1, 1, 1, 2, 13,'terreneitor');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 2, 2, 1, 3, 11,'supra');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 3, 3, 2, 5, 11,'configsistem');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 2, 2, 2, 3, 11,'System32');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(5, 3, 4, 3, 8, 11,'linuxlovers');
+SET IDENTITY_INSERT Productos ON INSERT INTO Productos(codigo_barras, precio, detalle) VALUES('F213T425ABC', 1099.00, 6),('P683T425ABC', 1199.00, 7),('M2563T425ABC', 1099.00, 8),('DI578T425ABC', 9999.00, 9),('JDIE7425ABC', 4075.99, 10) SET IDENTITY_INSERT Productos OFF;
+
+Select * from Colores
+SELECT * FROM Tallas
+SELECT * FROM  GeneroRopa
+SELECT * FROM  Tipos
+SELECT * FROM  Marcas
+SELECT * FROM  Proveedores
+SELECT * FROM  Municipios
+SELECT * FROM DetallesRopa
+SELECT * fROM Productos
