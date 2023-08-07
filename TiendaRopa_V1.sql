@@ -258,6 +258,19 @@ INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tien
 INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 5, 3, 4, 3, 4, 37481923, '09:00:00', '18:00:00','08:00:00', 2400.00);
 INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones) VALUES (1, '2023-08-06 10:30:00', '2023-08-06 15:45:00', 101, 'Art�culos recibidos para almacenamiento temporal.'), (2, '2023-08-07 09:15:00', '2023-08-07 16:30:00', 105, 'Nuevo inventario de productos electr�nicos.'), (3, '2023-08-08 11:00:00', '2023-08-08 17:20:00', 110, 'Art�culos enviados para distribuci�n.'), (4, '2023-08-09 08:45:00', '2023-08-09 15:15:00', 107, 'Inventario de productos perecederos.'), (5, '2023-08-10 12:30:00', '2023-08-10 17:00:00', 103, 'Art�culos recibidos para inspecci�n y reparaci�n.');
 
+INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones) VALUES (1, '2023-08-06 10:30:00', '2023-08-06 15:45:00', 101, 'Art�culos recibidos para almacenamiento temporal.'), (2, '2023-08-07 09:15:00', '2023-08-07 16:30:00', 105, 'Nuevo inventario de productos electr�nicos.'), (3, '2023-08-08 11:00:00', '2023-08-08 17:20:00', 110, 'Art�culos enviados para distribuci�n.'), (4, '2023-08-09 08:45:00', '2023-08-09 15:15:00', 107, 'Inventario de productos perecederos.'), (5, '2023-08-10 12:30:00', '2023-08-10 17:00:00', 103, 'Art�culos recibidos para inspecci�n y reparaci�n.');
+INSERT INTO Inventario (producto, cantidad_disponible, fecha_llegada, id_bodega) VALUES ('F213T425ABC', 100, '2023-08-06 10:30:00', 1), ('P683T425ABC', 50, '2023-08-07 09:15:00', 2), ('M2563T425ABC', 200, '2023-08-08 11:00:00', 3), ('DI578T425ABC', 75, '2023-08-09 08:45:00', 4), ('JDIE7425ABC', 120, '2023-08-10 12:30:00', 5);
+INSERT INTO Factura (n_Factura, id_empleado, id_cliente, fecha_hora, id_local, monto_pagado, cambio, sub_total, gravado15, total) VALUES (1, 1, 3, '2023-08-06 10:30:00', 1, 250.00, 50.00, 200.00, 30.00, 230.00);
+INSERT INTO Factura (n_Factura, id_empleado, id_cliente, fecha_hora, id_local, monto_pagado, cambio, sub_total, gravado15, total) VALUES(2, 2, 3, '2023-08-07 09:15:00', 2, 350.00, 100.00, 250.00, 50.00, 300.00);
+INSERT INTO Factura (n_Factura, id_empleado, id_cliente, fecha_hora, id_local, monto_pagado, cambio, sub_total, gravado15, total) VALUES(3, 3, 4, '2023-08-08 11:00:00', 3, 450.00, 150.00, 300.00, 45.00, 345.00); 
+INSERT INTO Factura (n_Factura, id_empleado, id_cliente, fecha_hora, id_local, monto_pagado, cambio, sub_total, gravado15, total) VALUES(4, 4, 2, '2023-08-09 08:45:00', 1, 300.00, 50.00, 250.00, 37.50, 287.50);
+INSERT INTO Factura (n_Factura, id_empleado, id_cliente, fecha_hora, id_local, monto_pagado, cambio, sub_total, gravado15, total) VALUES(5, 4, 3, '2023-08-10 12:30:00', 4, 550.00, 100.00, 450.00, 67.50, 517.50);
+INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VALUES (1, 1, 'F213T425ABC', 10);
+INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VALUES (2, 2, 'P683T425ABC', 5)
+INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VALUES(3, 3, 'M2563T425ABC', 8);
+INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VALUES(4, 4, 'DI578T425ABC', 15);
+INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VALUES(5, 5, 'JDIE7425ABC', 20);
+INSERT INTO Producto_mas_vendido (id_mes, id_Producto, mes, anio, cantidad) VALUES (1, 'F213T425ABC', 8, 2023, 120), (2, 'P683T425ABC', 8, 2023, 90), (3, 'M2563T425ABC', 8, 2023, 150), (4, 'DI578T425ABC', 8, 2023, 200), (5, 'JDIE7425ABC', 8, 2023, 80);
 
 --SELECTS 
 SELECT * FROM Paises
@@ -280,3 +293,7 @@ SELECT * FROM PuestosTrabajo
 SELECT * FROM Clientes 
 SELECT * FROM Empleados
 SELECT * FROM Bodega
+SELECT * FROM Inventario
+SELECT * FROM Producto_mas_vendido
+SELECT * FROM Factura
+SELECT * FROM detalle_compra
