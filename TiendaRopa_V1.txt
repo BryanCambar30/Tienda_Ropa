@@ -211,6 +211,15 @@ CREATE TABLE detalle_compra(
 	);
 
 
+CREATE TABLE Producto_mas_vendido(
+	id_mes INTEGER PRIMARY KEY,
+	id_Producto VARCHAR (20) NOT NULL,
+	mes INTEGER NOT NULL,
+	anio INTEGER NOT NULL,
+	cantidad INTEGER NOT NULL,
+	CONSTRAINT fk_id_producto_mas_vendido FOREIGN KEY (id_producto) REFERENCES productos(codigo_barras)
+	)
+
 --INSERTS
 INSERT INTO Paises(descripcion) VALUES('Honduras'), ('Costa Rica'),('Panamá'),('Nicaragua'),('EL Salvador');
 INSERT INTO Departamentos(idPais,descripcion) VALUES(1,'Francisco Morazn'), (5,'San Salvador'),(1,'Atlantida'),(1,'Cortes'),(2,'San jose');
@@ -222,4 +231,59 @@ INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S
 INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES(1,1,'Jonh', 'Snow','Aegon','Targaryen','1999-06-01','GOT@gmail.com');
 INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES(1,4,'Daenerys ', 'Tormenta','Targaryen','Lopez','1998-06-01','GOTa@gmail.com');
 INSERT INTO Profesiones(descripcion,comentarios)VALUES('Abogado',''),('Ingeniero en Sistemas','que pro'),('Maestro',''),('Futbolista',''),('Arquitecto','');
+
+INSERT INTO Colores(descripcion)VALUES('Azul'),('Verde'),('Amarillo'),('Rojo'),('Negro');
+INSERT INTO Tallas(descripcion)VALUES('xs'),('s'),('m'),('l'),('xl'),('xxl'),('xxxl'),('xxs');
+INSERT INTO GeneroRopa(descripcion)VALUES('Femenino'),('Masculino'),('bebe'),('unisex');
+INSERT INTO Tipos(descripcion)VALUES('Camisa Formal'),('Camisa Polo'),('Camiseta'),('Pantalon Formal'),('Pantalon Mesclilla');
+INSERT INTO Marcas(descripcion)VALUES('Nike'),('Adidas'),('Flamingo'),('Joma'),('Ralph Lauren');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'El General FM', '22909001', '0801-1903-229011', 'elGeneral@gmail.com');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'Salvatore Style', '28909090', '9809-1903-229011', 'Salvatorel@gmail.com');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'PieceArts', '22905555', '0819-1903-229011', 'PieceArts@gmail.com');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'CautionStyle', '22955551', '0801-1903-229331', 'CautionS@gmail.com');
+INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(4, 'Leopoldo', '22908501', '0801-1903-222220', 'Leopoldo@gmail.com');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 1, 1, 1, 2, 1,'terreneitor');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 2, 2, 1, 3, 2,'supra');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 3, 3, 2, 5, 3,'configsistem');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 2, 2, 2, 3, 4,'System32');
+INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(5, 3, 4, 3, 8, 5,'linuxlovers');
+SET IDENTITY_INSERT Productos ON INSERT INTO Productos(codigo_barras, precio, detalle) VALUES('F213T425ABC', 1099.00, 1),('P683T425ABC', 1199.00, 2),('M2563T425ABC', 1099.00, 3),('DI578T425ABC', 9999.00, 4),('JDIE7425ABC', 4075.99, 5) SET IDENTITY_INSERT Productos OFF;
+
+INSERT INTO Sucursales (idLocal, idMuncipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz) VALUES (1, 1, '08:00:00', '18:00:00', '22334455', 'sucursal1@example.com', 'ABCDE12345', 'Sucursal A', 1), (2, 2, '09:30:00', '17:30:00', '99887766', 'sucursal2@example.com', 'FGHIJ67890', 'Sucursal B', 0), (3, 3, '07:45:00', '19:00:00', '11223344', 'sucursal3@example.com', 'KLMNO54321', 'Sucursal C', 0), (4, 4, '08:15:00', '17:15:00', '77665544', 'sucursal4@example.com', 'PQRST67890', 'Sucursal D', 1),(5, 5, '09:00:00', '18:00:00', '99001122', 'sucursal5@example.com', 'UVWXYZ12345', 'Sucursal E', 0);
+INSERT INTO PuestosTrabajo (descripcion, comentario) VALUES ('Gerente de Proyectos', 'Encargado de liderar y coordinar proyectos estrategicos.'), ('Analista de Marketing', 'Responsable de realizar analisis de mercado y estrategias de marketing.'), ('Tecnico de Soporte', 'Brinda asistencia tecnica y resuelve problemas de los clientes.'), ('Disenador Grafico', 'Crea y disena materiales graficos para campanas publicitarias.'), ('Desarrollador de Software', 'Encargado de programar y desarrollar aplicaciones y software.');
+INSERT INTO Clientes (id_persona, id_profesion) VALUES (1, 1);
+INSERT INTO Clientes (id_persona, id_profesion) VALUES(2, 2);
+INSERT INTO Clientes (id_persona, id_profesion) VALUES(3, 3);
+INSERT INTO Clientes (id_persona, id_profesion) VALUES(4, 4);
+INSERT INTO Clientes (id_persona, id_profesion) VALUES(4, 5);
+INSERT INTO Clientes (id_persona, id_profesion,Tipo_Mayoritario) VALUES (1,1,1);
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES ( 1, 1, 1, 2, 1, 94345678, '08:00:00', '17:00:00', '08:00:00', 2500.00);
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 2, 2, 3, 2, 2, 98765432, '09:30:00', '18:30:00', '08:00:00', 2100.00); 
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 3, 3, 2, 4, 3, 94681357, '07:45:00', '16:45:00','08:00:00', 2300.00); 
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 4, 4, 5, 5, 5, 33579246, '08:15:00', '17:15:00','08:00:00', 2700.00);
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 5, 3, 4, 3, 4, 37481923, '09:00:00', '18:00:00','08:00:00', 2400.00);
+INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones) VALUES (1, '2023-08-06 10:30:00', '2023-08-06 15:45:00', 101, 'Art�culos recibidos para almacenamiento temporal.'), (2, '2023-08-07 09:15:00', '2023-08-07 16:30:00', 105, 'Nuevo inventario de productos electr�nicos.'), (3, '2023-08-08 11:00:00', '2023-08-08 17:20:00', 110, 'Art�culos enviados para distribuci�n.'), (4, '2023-08-09 08:45:00', '2023-08-09 15:15:00', 107, 'Inventario de productos perecederos.'), (5, '2023-08-10 12:30:00', '2023-08-10 17:00:00', 103, 'Art�culos recibidos para inspecci�n y reparaci�n.');
+
+--SELECTS 
+SELECT * FROM Paises
+SELECT * FROM Departamentos
+SELECT * FROM Municipios
+SELECT * FROM Generos
+SELECT * FROM Personas
+SELECT * FROM Profesiones
+Select * from Colores
+SELECT * FROM Tallas
+SELECT * FROM  GeneroRopa
+SELECT * FROM  Tipos
+SELECT * FROM  Marcas
+SELECT * FROM  Proveedores
+SELECT * FROM  Municipios
+SELECT * FROM DetallesRopa
+SELECT * fROM Productos
+SELECT * FROM Sucursales
+SELECT * FROM PuestosTrabajo
+SELECT * FROM Clientes 
+SELECT * FROM Empleados
+SELECT * FROM Bodega
+
 
