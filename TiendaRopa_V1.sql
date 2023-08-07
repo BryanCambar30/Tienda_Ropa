@@ -258,6 +258,7 @@ INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tien
 INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 5, 3, 4, 3, 4, 37481923, '09:00:00', '18:00:00','08:00:00', 2400.00);
 INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones) VALUES (1, '2023-08-06 10:30:00', '2023-08-06 15:45:00', 101, 'Art�culos recibidos para almacenamiento temporal.'), (2, '2023-08-07 09:15:00', '2023-08-07 16:30:00', 105, 'Nuevo inventario de productos electr�nicos.'), (3, '2023-08-08 11:00:00', '2023-08-08 17:20:00', 110, 'Art�culos enviados para distribuci�n.'), (4, '2023-08-09 08:45:00', '2023-08-09 15:15:00', 107, 'Inventario de productos perecederos.'), (5, '2023-08-10 12:30:00', '2023-08-10 17:00:00', 103, 'Art�culos recibidos para inspecci�n y reparaci�n.');
 
+
 --SELECTS 
 SELECT * FROM Paises
 SELECT * FROM Departamentos
