@@ -151,19 +151,6 @@ CREATE TABLE Productos(
 	detalle INTEGER IDENTITY(1,1),
 	CONSTRAINT FK_id_detalle_ropa FOREIGN KEY (detalle) REFERENCES DetallesRopa(id_detalle),
 	)
-ALTER TABLE Productos
-ADD descuento bit, --si es 1 si tiene y si es 0 no 
-	porcentaje_descuento DECIMAL (5,2);
-
-CREATE TRIGGER aplicar_descuento_producto
-ON Productos
-AFTER INSERT, UPDATE
-AS
-BEGIN
-  UPDATE Productos
-  SET precio = precio * (1 - ISNULL(porcentaje_descuento, 0))
-  WHERE descuento = 1;
-END;
 
 CREATE TABLE Bodega(
 	id_bodega INTEGER PRIMARY KEY,
