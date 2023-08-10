@@ -40,3 +40,45 @@ C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\bin\Debug\net6.0-
 C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\bin\Debug\net6.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.csproj.CopyComplete
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\TiendaRopa_V1.exe
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\TiendaRopa_V1.deps.json
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\TiendaRopa_V1.runtimeconfig.json
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\TiendaRopa_V1.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\TiendaRopa_V1.pdb
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Azure.Core.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Azure.Identity.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.Data.SqlClient.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.Identity.Client.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Logging.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Protocols.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Tokens.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\Microsoft.SqlServer.Server.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\System.Configuration.ConfigurationManager.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\System.Memory.Data.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\System.Runtime.Caching.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.csproj.AssemblyReference.cache
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Form1.resources
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.csproj.GenerateResource.cache
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.AssemblyInfoInputs.cache
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.AssemblyInfo.cs
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.csproj.CoreCompileInputs.cache
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.csproj.CopyComplete
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\refint\TiendaRopa_V1.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.pdb
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.genruntimeconfig.cache
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\ref\TiendaRopa_V1.dll

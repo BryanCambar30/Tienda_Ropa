@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
+using System.Net;
 
 namespace TiendaRopa_V1.Clases
 {
@@ -12,11 +14,12 @@ namespace TiendaRopa_V1.Clases
     {
         SqlConnection conexionSQL = new SqlConnection();
 
-        static string server = "localhost";
         static string db = "TiendaRopa_V1";
         static string usuario = "hackypants";
         static string password = "Qwerty123";
         static string port = "1433";
+        //string nombre_servidor = Dns.GetHostName();
+        static string server = Dns.GetHostName();
 
         string CadenaConexion = "Data Source=" + server + "," + port + ";" + "user id=" + usuario + ";" + "password=" + password + ";" + "Initial catalog=" + db + ";";
 
