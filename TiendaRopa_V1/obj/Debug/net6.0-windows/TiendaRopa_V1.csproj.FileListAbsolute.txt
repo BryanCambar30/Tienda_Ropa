@@ -1,0 +1,16 @@
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\bin\Debug\net6.0-windows\TiendaRopa_V1.exe
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\bin\Debug\net6.0-windows\TiendaRopa_V1.deps.json
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\bin\Debug\net6.0-windows\TiendaRopa_V1.runtimeconfig.json
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\bin\Debug\net6.0-windows\TiendaRopa_V1.dll
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\bin\Debug\net6.0-windows\TiendaRopa_V1.pdb
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.Form1.resources
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.csproj.GenerateResource.cache
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.AssemblyInfoInputs.cache
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.AssemblyInfo.cs
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.csproj.CoreCompileInputs.cache
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.dll
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\refint\TiendaRopa_V1.dll
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.pdb
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\TiendaRopa_V1.genruntimeconfig.cache
+C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-windows\ref\TiendaRopa_V1.dll

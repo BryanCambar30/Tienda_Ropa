@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_V1\\TiendaRopa_V1.csproj": {}
+    "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_v1\\TiendaRopa_V1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_V1\\TiendaRopa_V1.csproj": {
+    "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_v1\\TiendaRopa_V1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_V1\\TiendaRopa_V1.csproj",
+        "projectUniqueName": "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_v1\\TiendaRopa_V1.csproj",
         "projectName": "TiendaRopa_V1",
-        "projectPath": "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_V1\\TiendaRopa_V1.csproj",
+        "projectPath": "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_v1\\TiendaRopa_V1.csproj",
         "packagesPath": "C:\\Users\\CypherCaius\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_V1\\obj\\",
         "projectStyle": "PackageReference",

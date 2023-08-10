@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "TiendaRopa_V1/1.0.0": {
+        "runtime": {
+          "TiendaRopa_V1.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TiendaRopa_V1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
