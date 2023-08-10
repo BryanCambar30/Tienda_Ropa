@@ -6,5 +6,17 @@ namespace TiendaRopa_V1
         {
             InitializeComponent();
         }
+
+        private void conectarSqlServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clases.ConexionSQLServer objetoConexion = new Clases.ConexionSQLServer();
+            objetoConexion.establecerConexion();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Clases.ConexionSQLServer objetoConexion = new Clases.ConexionSQLServer();
+            objetoConexion.establecerConexion();
+        }
     }
 }

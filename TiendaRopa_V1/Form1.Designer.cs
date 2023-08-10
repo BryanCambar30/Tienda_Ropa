@@ -30,8 +30,11 @@
         {
             menuStrip1 = new MenuStrip();
             inicioToolStripMenuItem = new ToolStripMenuItem();
+            conectarSqlServerToolStripMenuItem = new ToolStripMenuItem();
+            conectarOracleDBToolStripMenuItem = new ToolStripMenuItem();
             configuracionToolStripMenuItem = new ToolStripMenuItem();
             ayudaToolStripMenuItem = new ToolStripMenuItem();
+            button1 = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -46,9 +49,23 @@
             // 
             // inicioToolStripMenuItem
             // 
+            inicioToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { conectarSqlServerToolStripMenuItem, conectarOracleDBToolStripMenuItem });
             inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
             inicioToolStripMenuItem.Size = new Size(48, 20);
             inicioToolStripMenuItem.Text = "Inicio";
+            // 
+            // conectarSqlServerToolStripMenuItem
+            // 
+            conectarSqlServerToolStripMenuItem.Name = "conectarSqlServerToolStripMenuItem";
+            conectarSqlServerToolStripMenuItem.Size = new Size(177, 22);
+            conectarSqlServerToolStripMenuItem.Text = "Conectar SqlServer ";
+            conectarSqlServerToolStripMenuItem.Click += conectarSqlServerToolStripMenuItem_Click;
+            // 
+            // conectarOracleDBToolStripMenuItem
+            // 
+            conectarOracleDBToolStripMenuItem.Name = "conectarOracleDBToolStripMenuItem";
+            conectarOracleDBToolStripMenuItem.Size = new Size(177, 22);
+            conectarOracleDBToolStripMenuItem.Text = "Conectar Oracle DB";
             // 
             // configuracionToolStripMenuItem
             // 
@@ -62,11 +79,22 @@
             ayudaToolStripMenuItem.Size = new Size(53, 20);
             ayudaToolStripMenuItem.Text = "Ayuda";
             // 
+            // button1
+            // 
+            button1.Location = new Point(12, 38);
+            button1.Name = "button1";
+            button1.Size = new Size(130, 23);
+            button1.TabIndex = 1;
+            button1.Text = "ConectarSQLServer";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
@@ -83,5 +111,8 @@
         private ToolStripMenuItem inicioToolStripMenuItem;
         private ToolStripMenuItem configuracionToolStripMenuItem;
         private ToolStripMenuItem ayudaToolStripMenuItem;
+        private ToolStripMenuItem conectarSqlServerToolStripMenuItem;
+        private ToolStripMenuItem conectarOracleDBToolStripMenuItem;
+        private Button button1;
     }
 }

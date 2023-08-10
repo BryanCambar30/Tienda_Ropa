@@ -11,7 +11,7 @@
         "projectName": "TiendaRopa_V1",
         "projectPath": "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_v1\\TiendaRopa_V1.csproj",
         "packagesPath": "C:\\Users\\CypherCaius\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_V1\\obj\\",
+        "outputPath": "C:\\Users\\CypherCaius\\Desktop\\Bases I\\Tienda_Ropa\\TiendaRopa_v1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -43,6 +43,12 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.1.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
