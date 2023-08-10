@@ -15,13 +15,12 @@ namespace TiendaRopa_V1.Clases
         SqlConnection conexionSQL = new SqlConnection();
 
         static string db = "TiendaRopa_V1";
-        static string usuario = "hackypants";
+        static string usuario = "sa";
         static string password = "Qwerty123";
         static string port = "1433";
         //string nombre_servidor = Dns.GetHostName();
         static string server = Dns.GetHostName();
-
-        string CadenaConexion = "Data Source=" + server + "," + port + ";" + "user id=" + usuario + ";" + "password=" + password + ";" + "Initial catalog=" + db + ";";
+        string CadenaConexion = "Data Source=" + server + "," + port + ";" + "user id=" + usuario + ";" + "password=" + password + ";" + "Initial catalog=" + db + ";"+"TrustServerCertificate=True";
 
         public SqlConnection establecerConexion()
         {
