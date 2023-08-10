@@ -14,7 +14,7 @@ namespace TiendaRopa_V1.Clases
 
         static string server = "localhost";
         static string db = "TiendaRopa_V1";
-        static string usuario = "hachypants";
+        static string usuario = "hackypants";
         static string password = "Qwerty123";
         static string port = "1433";
 
