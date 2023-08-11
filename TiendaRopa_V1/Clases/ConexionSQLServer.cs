@@ -18,7 +18,7 @@ namespace TiendaRopa_V1.Clases
         static string usuario = "sa";
         static string password = "Qwerty123";
         static string port = "1433";
-        //string nombre_servidor = Dns.GetHostName();
+        //static string server = Dns.GetHostName();
         static string server = Dns.GetHostName();
         string CadenaConexion = "Data Source=" + server + "," + port + ";" + "user id=" + usuario + ";" + "password=" + password + ";" + "Initial catalog=" + db + ";"+"TrustServerCertificate=True";
 
