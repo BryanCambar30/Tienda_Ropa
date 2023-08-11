@@ -214,6 +214,21 @@ CREATE TABLE Producto_mas_vendido(
 	CONSTRAINT fk_id_producto_mas_vendido FOREIGN KEY (id_producto) REFERENCES productos(codigo_barras)
 	)
 
+DECLARE @Password VARCHAR(50);
+DECLARE @Salt VARCHAR(25);
+DECLARE @Hash VARCHAR(64);
+
+SET @Password = 'Qwerty123';
+SET @Salt = CONVERT(VARCHAR(36), NEWID());
+SET @Hash = HASHBYTES('SHA2_256', @Password + @Salt);
+
+UPDATE Empleados
+SET password_hash = @Hash, password_salt = @Salt
+Where id_empleado = 2;
+
+ALTER TABLE Empleados
+ADD password_hash VARCHAR(64), password_salt VARCHAR(25);
+
 --INSERTS
 INSERT INTO Paises(descripcion) VALUES('Honduras'), ('Costa Rica'),('Panamá'),('Nicaragua'),('EL Salvador');
 INSERT INTO Departamentos(idPais,descripcion) VALUES(1,'Francisco Morazn'), (5,'San Salvador'),(1,'Atlantida'),(1,'Cortes'),(2,'San jose');

@@ -1,289 +1,455 @@
-CREATE DATABASE	TiendaRopa_V1	
-
 USE TiendaRopa_V1
 
-CREATE TABLE Paises(
+/*CREATE TABLE Paises(
 idPais INTEGER IDENTITY (1,1) PRIMARY KEY,
 descripcion VARCHAR (20) NOT NULL
+);*/
+CREATE SEQUENCE seq_idPais START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE Paises(
+idPais INTEGER PRIMARY KEY,
+descripcion VARCHAR(20) NOT NULL
 );
 
+CREATE OR REPLACE TRIGGER tr_idPais
+BEFORE INSERT ON Paises
+FOR EACH ROW
+BEGIN
+  SELECT seq_idPais.NEXTVAL INTO :NEW.idPais FROM dual;
+END;
+/
+
+CREATE SEQUENCE seq_idDepto START WITH 1 INCREMENT BY 1;
+
 CREATE TABLE Departamentos(
-idDepto INTEGER IDENTITY(1,1) PRIMARY KEY, 
+idDepto INTEGER PRIMARY KEY,
 idPais INTEGER NOT NULL,
-descripcion VARCHAR (50)
+descripcion VARCHAR(50),
 CONSTRAINT FK_depto_pais FOREIGN KEY (idPais) REFERENCES Paises(idPais)
 );
 
+CREATE OR REPLACE TRIGGER tr_idDepto
+BEFORE INSERT ON Departamentos
+FOR EACH ROW
+BEGIN
+  SELECT seq_idDepto.NEXTVAL INTO :NEW.idDepto FROM dual;
+END;
+/
+
+CREATE SEQUENCE seq_idMunicipio START WITH 1 INCREMENT BY 1;
+
 CREATE TABLE Municipios(
-idMuncipio INTEGER IDENTITY (1,1) PRIMARY KEY, 
+idMunicipio INTEGER PRIMARY KEY,
 idDepto INTEGER NOT NULL,
-decripcion VARCHAR(50)
+descripcion VARCHAR(50),
 CONSTRAINT FK_mun_depto FOREIGN KEY (idDepto) REFERENCES Departamentos(idDepto)
 );
 
-CREATE TABLE Generos(
-id_genero INTEGER IDENTITY PRIMARY KEY,
-descripcion VARCHAR(20) NOT NULL,
+CREATE OR REPLACE TRIGGER tr_idMunicipio
+BEFORE INSERT ON Municipios
+FOR EACH ROW
+BEGIN
+  SELECT seq_idMunicipio.NEXTVAL INTO :NEW.idMunicipio FROM dual;
+END;
+/
+
+CREATE SEQUENCE seq_id_genero START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE Generos (
+    id_genero INTEGER PRIMARY KEY,
+    descripcion VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE Personas(
-idPersona INTEGER IDENTITY(1,1) PRIMARY KEY, 
-id_lugarNacimiento INTEGER NOT NULL,
-id_genero INTEGER NOT NULL,	
-P_nombre VARCHAR (25) NOT NULL, 
-S_nombre VARCHAR (25) NULL,
-P_apellido VARCHAR (25) NOT NULL,
-S_apellido VARCHAR (25) NULL, 
-fecha_nacimiento DATE NULL,
-correo VARCHAR (100) NOT NULL,
-CONSTRAINT FK_per_mun FOREIGN KEY (id_lugarNacimiento) REFERENCES Municipios(idMuncipio),
-CONSTRAINT FK_per_gen FOREIGN KEY (id_genero) REFERENCES Generos(id_genero)
+CREATE OR REPLACE TRIGGER tr_id_genero
+BEFORE INSERT ON Generos
+FOR EACH ROW
+BEGIN
+    SELECT seq_id_genero.NEXTVAL INTO :NEW.id_genero FROM dual;
+END;
+/
+
+CREATE SEQUENCE seq_idPersona START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE Personas (
+    idPersona INTEGER PRIMARY KEY,
+    id_lugarNacimiento INTEGER NOT NULL,
+    id_genero INTEGER NOT NULL,
+    P_nombre VARCHAR(25) NOT NULL,
+    S_nombre VARCHAR(25),
+    P_apellido VARCHAR(25) NOT NULL,
+    S_apellido VARCHAR(25),
+    fecha_nacimiento DATE,
+    correo VARCHAR(100) NOT NULL,
+    CONSTRAINT FK_per_mun FOREIGN KEY (id_lugarNacimiento) REFERENCES Municipios(idMunicipio),
+    CONSTRAINT FK_per_gen FOREIGN KEY (id_genero) REFERENCES Generos(id_genero)
 );
 
-CREATE TABLE Sucursales(
-idLocal INTEGER PRIMARY KEY,
-idMuncipio INTEGER NOT NULL,
-horaApertura TIME NOT NULL, 
-horaCierre TIME NOT NULL, 
-telefono VARCHAR (8) NOT NULL,
-eMail VARCHAR (50) NULL,
-cai VARCHAR(25) NOT NULL,
-razonSocial VARCHAR (100)
-CONSTRAINT FK_sucur_mun FOREIGN KEY (idMuncipio) REFERENCES Municipios(idMuncipio)
-);
-ALTER TABLE Sucursales
-ADD es_casa_matriz BIT; -- 1 si es casa matriz, 0 si no
+CREATE OR REPLACE TRIGGER tr_idPersona
+BEFORE INSERT ON Personas
+FOR EACH ROW
+BEGIN
+    SELECT seq_idPersona.NEXTVAL INTO :NEW.idPersona FROM dual;
+END;
+/
 
-CREATE TABLE Profesiones(
-idProfesion INTEGER IDENTITY(1,1) PRIMARY KEY,
-descripcion VARCHAR(100) NOT NULL,
-comentarios VARCHAR(200) NULL,
-);
-
-CREATE TABLE PuestosTrabajo(
-idPuesto INTEGER IDENTITY (1,1) PRIMARY KEY,
-descripcion VARCHAR (80) NOT NULL,
-comentario VARCHAR (150) NULL
+CREATE TABLE Sucursales (
+    idLocal INTEGER PRIMARY KEY,
+    idMunicipio INTEGER NOT NULL,
+    horaApertura VARCHAR2(8) NOT NULL,
+    horaCierre VARCHAR2(8) NOT NULL,
+    telefono VARCHAR2(8) NOT NULL,
+    eMail VARCHAR2(50),
+    cai VARCHAR2(25) NOT NULL,
+    razonSocial VARCHAR2(100),
+    es_casa_matriz NUMBER(1), -- Utilizamos NUMBER(1) para representar un valor booleano (0 o 1)
+    CONSTRAINT FK_sucur_mun FOREIGN KEY (idMunicipio) REFERENCES Municipios(idMunicipio)
 );
 
-CREATE TABLE Clientes(
-id_clientes INTEGER IDENTITY(1,1) PRIMARY KEY, 
-id_persona INTEGER NOT NULL,
-id_profesion INTEGER NOT NULL,
-CONSTRAINT FK_cliente_persona FOREIGN KEY (id_persona) REFERENCES Personas(idPersona),
-CONSTRAINT FK_cliente_profesion FOREIGN KEY (id_profesion) REFERENCES Profesiones(idProfesion)
+CREATE TABLE Profesiones (
+    idProfesion INTEGER PRIMARY KEY,
+    descripcion VARCHAR(100) NOT NULL,
+    comentarios VARCHAR(200) NULL
 );
 
-CREATE TABLE Empleados(
-id_empleado INTEGER PRIMARY KEY,
-id_persona INTEGER NOT NULL,
-id_puesto INTEGER NOT NULL,
-id_profesion INTEGER NOT NULL,
-id_tienda INTEGER NOT NULL,
-telefono INTEGER NOT NULL,
-horaEntrada TIME NOT NULL, --HH:MM:SS
-horaSalida TIME NOT NULL,
-horasTrabajas TIME NOT NULL, -- analizar el tipo de dato esta bien 
-Salario DECIMAL(10, 2),
-CONSTRAINT CHK_telefono CHECK (LEN(CONVERT(VARCHAR, Telefono)) = 8),--analizar 
-CONSTRAINT FK_emp_per FOREIGN KEY (id_persona) REFERENCES Personas(idPersona),
-CONSTRAINT FK_emp_puesto FOREIGN KEY (id_puesto) REFERENCES PuestosTrabajo(idPuesto),
-CONSTRAINT FK_emp_prof FOREIGN KEY (id_profesion) REFERENCES Profesiones(idProfesion),
-CONSTRAINT FK_emp_tienda FOREIGN KEY (id_tienda) REFERENCES Sucursales(idLocal),
+CREATE TABLE PuestosTrabajo (
+    idPuesto INTEGER PRIMARY KEY,
+    descripcion VARCHAR(80) NOT NULL,
+    comentario VARCHAR(150) NULL
 );
 
-CREATE TABLE Tallas(
-id_talla INTEGER IDENTITY(1,1) PRIMARY KEY,
-descripcion VARCHAR (10) NOT NULL
+CREATE TABLE Clientes (
+    id_clientes INTEGER PRIMARY KEY,
+    id_persona INTEGER NOT NULL,
+    id_profesion INTEGER NOT NULL,
+    CONSTRAINT FK_cliente_persona FOREIGN KEY (id_persona) REFERENCES Personas(idPersona),
+    CONSTRAINT FK_cliente_profesion FOREIGN KEY (id_profesion) REFERENCES Profesiones(idProfesion)
 );
 
-CREATE TABLE GeneroRopa(
-id_gen_ropa INTEGER IDENTITY(1,1) PRIMARY KEY,
-descripcion VARCHAR (15) NOT NULL
+CREATE TABLE Empleados (
+    id_empleado INTEGER PRIMARY KEY,
+    id_persona INTEGER NOT NULL,
+    id_puesto INTEGER NOT NULL,
+    id_profesion INTEGER NOT NULL,
+    id_tienda INTEGER NOT NULL,
+    telefono VARCHAR(8) NOT NULL,
+    horaEntrada VARCHAR2(8) NOT NULL,
+    horaSalida VARCHAR2(8) NOT NULL,
+    horasTrabajadas INTERVAL DAY TO SECOND, -- Tipo de dato INTERVAL para almacenar la duración de tiempo
+    salario DECIMAL(10, 2),
+    CONSTRAINT CHK_telefono CHECK (LENGTH(telefono) = 8),
+    CONSTRAINT FK_emp_per FOREIGN KEY (id_persona) REFERENCES Personas(idPersona),
+    CONSTRAINT FK_emp_puesto FOREIGN KEY (id_puesto) REFERENCES PuestosTrabajo(idPuesto),
+    CONSTRAINT FK_emp_prof FOREIGN KEY (id_profesion) REFERENCES Profesiones(idProfesion),
+    CONSTRAINT FK_emp_tienda FOREIGN KEY (id_tienda) REFERENCES Sucursales(idLocal)
 );
 
-CREATE TABLE Colores(
-id_colores INTEGER IDENTITY(1,1) PRIMARY KEY,
-descripcion VARCHAR (15) NOT NULL
+CREATE TABLE Tallas (
+    id_talla INTEGER PRIMARY KEY,
+    descripcion VARCHAR(10) NOT NULL
 );
 
-CREATE TABLE Tipos(
-id_tipos INTEGER IDENTITY(1,1) PRIMARY KEY,
-descripcion VARCHAR (30) NOT NULL
+CREATE TABLE GeneroRopa (
+    id_gen_ropa INTEGER PRIMARY KEY,
+    descripcion VARCHAR(10) NOT NULL
 );
 
-CREATE TABLE Marcas(
-id_marcas INTEGER IDENTITY(1,1) PRIMARY KEY,
-descripcion VARCHAR (30) NOT NULL
+CREATE TABLE Colores (
+    id_colores INTEGER PRIMARY KEY,
+    descripcion VARCHAR(15) NOT NULL
 );
 
-CREATE TABLE Proveedores(
-id_proveedores INTEGER IDENTITY(1,1) PRIMARY KEY,
-id_direccion INTEGER NOT NULL,
-nombre_empresa VARCHAR(50) NOT NULL,
-telefono INTEGER NOT NULL,
-RTN VARCHAR(30) NOT NULL,
-email VARCHAR (30),
-CONSTRAINT CHK_telefonoPro CHECK (LEN(CONVERT(VARCHAR, Telefono)) = 8),--analizar 
-CONSTRAINT FK_prov_municipio FOREIGN KEY (id_direccion) REFERENCES Municipios(idMuncipio)
+CREATE TABLE Tipos (
+    id_tipos INTEGER PRIMARY KEY,
+    descripcion VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Marcas (
+    id_marcas INTEGER PRIMARY KEY,
+    descripcion VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Proveedores (
+    id_proveedores INTEGER PRIMARY KEY,
+    id_direccion INTEGER NOT NULL,
+    nombre_empresa VARCHAR(50) NOT NULL,
+    telefono VARCHAR(8) NOT NULL,
+    RTN VARCHAR(30) NOT NULL,
+    email VARCHAR(30),
+    CONSTRAINT CHK_telefonoPro CHECK (LENGTH(telefono) = 8),
+    CONSTRAINT FK_prov_municipio FOREIGN KEY (id_direccion) REFERENCES Municipios(idMunicipio)
 );
 
 CREATE TABLE DetallesRopa (
-id_detalle INTEGER IDENTITY(1,1) PRIMARY KEY,
-id_talla INTEGER NOT NULL,
-id_genero INTEGER NOT NULL,
-id_color INTEGER NOT NULL,
-id_tipo INTEGER NOT NULL,
-id_marca INTEGER NOT NULL,
-id_proveedor INTEGER NOT NULL,
-nombre_producto varchar (55) NOT NULL,
-CONSTRAINT FK_detalle_talla FOREIGN KEY (id_talla) REFERENCES Tallas(id_talla),
-CONSTRAINT FK_detalle_genero FOREIGN KEY (id_genero) REFERENCES GeneroRopa(id_gen_ropa),
-CONSTRAINT FK_detalle_color FOREIGN KEY (id_color) REFERENCES Colores(id_colores),
-CONSTRAINT FK_detalle_tipo FOREIGN KEY (id_tipo) REFERENCES Tipos(id_tipos),
-CONSTRAINT FK_detalle_marca FOREIGN KEY (id_marca) REFERENCES Marcas(id_marcas),
-CONSTRAINT FK_detalle_proveedor FOREIGN KEY (id_proveedor) REFERENCES Proveedores(id_proveedores),
+    id_detalle INTEGER PRIMARY KEY,
+    id_talla INTEGER NOT NULL,
+    id_genero INTEGER NOT NULL,
+    id_color INTEGER NOT NULL,
+    id_tipo INTEGER NOT NULL,
+    id_marca INTEGER NOT NULL,
+    id_proveedor INTEGER NOT NULL,
+    nombre_producto VARCHAR(55) NOT NULL,
+    CONSTRAINT FK_detalle_talla FOREIGN KEY (id_talla) REFERENCES Tallas(id_talla),
+    CONSTRAINT FK_detalle_genero FOREIGN KEY (id_genero) REFERENCES Generos(id_genero),
+    CONSTRAINT FK_detalle_color FOREIGN KEY (id_color) REFERENCES Colores(id_colores),
+    CONSTRAINT FK_detalle_tipo FOREIGN KEY (id_tipo) REFERENCES Tipos(id_tipos),
+    CONSTRAINT FK_detalle_marca FOREIGN KEY (id_marca) REFERENCES Marcas(id_marcas),
+    CONSTRAINT FK_detalle_proveedor FOREIGN KEY (id_proveedor) REFERENCES Proveedores(id_proveedores)
 );
 
-CREATE TABLE Productos(
-	codigo_barras VARCHAR(20) PRIMARY KEY,
-	precio DECIMAL(10,2) NOT NULL, --este va a asi para poder almacenar precios mayores a 1,000 y para no tener fallas le puse un valor alto por si en algun momento se tiene un producto de mas de 10,000 
-	detalle INTEGER IDENTITY(1,1),
-	CONSTRAINT FK_id_detalle_ropa FOREIGN KEY (detalle) REFERENCES DetallesRopa(id_detalle),
-	)
+CREATE TABLE Productos (
+    codigo_barras VARCHAR(20) PRIMARY KEY,
+    precio DECIMAL(10, 2) NOT NULL,
+    detalle INTEGER,
+    CONSTRAINT FK_id_detalle_ropa FOREIGN KEY (detalle) REFERENCES DetallesRopa(id_detalle)
+);
+
 ALTER TABLE Productos
-ADD descuento bit, --si es 1 si tiene y si es 0 no 
-	porcentaje_descuento DECIMAL (5,2);
+ADD descuento NUMBER(1);
 
-CREATE TRIGGER aplicar_descuento_producto
-ON Productos
-AFTER INSERT, UPDATE
-AS
+ALTER TABLE Productos
+ADD porcentaje_descuento DECIMAL(5, 2);
+
+UPDATE Productos SET descuento = 0, porcentaje_descuento = 0;
+
+CREATE OR REPLACE TRIGGER aplicar_descuento_producto
+BEFORE INSERT OR UPDATE ON Productos
+FOR EACH ROW
 BEGIN
-  UPDATE Productos
-  SET precio = precio * (1 - ISNULL(porcentaje_descuento, 0))
-  WHERE descuento = 1;
+  IF :NEW.descuento = 1 THEN
+    :NEW.precio := :NEW.precio * (1 - NVL(:NEW.porcentaje_descuento, 0));
+  END IF;
 END;
+/
 
-CREATE TABLE Bodega(
-	id_bodega INTEGER PRIMARY KEY,
-	id_seccion INTEGER IDENTITY,
-	fecha_entrada DATETIME NOT NULL,
-	fecha_salida DATETIME NOT NULL,
-	id_empleado_ingreso INTEGER NOT NULL,
-	id_empleado_salida INTEGER,
-	observaciones VARCHAR(250)
-	);
-	
-CREATE TABLE Inventario(
-	id_inventario INTEGER IDENTITY(1,1) PRIMARY KEY,
-	producto VARCHAR(20) NOT NULL,
-	cantidad_disponible INTEGER,
-	fecha_llegada DATETIME NOT NULL,
-	id_bodega INTEGER NOT NULL,
-	CONSTRAINT FK_id_bodega FOREIGN KEY (id_bodega) REFERENCES Bodega(id_bodega),
-	CONSTRAINT FK_id_producto FOREIGN KEY (producto) REFERENCES Productos(codigo_barras)
-	);
-	
-CREATE TABLE Factura(
-	n_Factura INTEGER PRIMARY KEY,
-	id_empleado INTEGER NOT NULL,
-	id_cliente INTEGER,
-	fecha_hora DATETIME NOT NULL,
-	id_local INTEGER NOT NULL,
-	monto_pagado DECIMAL (10,2) NOT NULL,
-	cambio DECIMAL (10,2) NOT NULL,
-	sub_total DECIMAL (10,2) NOT NULL,
-	gravado15 DECIMAL (10,2) NOT NULL,
-	total DECIMAL (10,2) NOT NULL,
-	CONSTRAINT FK_id_empleado FOREIGN KEY (id_empleado) REFERENCES Empleados(id_empleado),
-	CONSTRAINT FK_id_cliente FOREIGN KEY (id_cliente) REFERENCES Clientes(id_clientes),
-	CONSTRAINT FK_id_local FOREIGN KEY (id_local) REFERENCES Sucursales(idlocal)
-	);
+CREATE TABLE Bodega (
+    id_bodega INTEGER PRIMARY KEY,
+    id_seccion INTEGER,
+    fecha_entrada TIMESTAMP NOT NULL,
+    fecha_salida TIMESTAMP NOT NULL,
+    id_empleado_ingreso INTEGER NOT NULL,
+    id_empleado_salida INTEGER,
+    observaciones VARCHAR2(250)
+);
 
-CREATE TABLE detalle_compra(
-	id_detalleCOmpra INTEGER PRIMARY KEY,
-	n_factura INTEGER NOT NULL,
-	producto VARCHAR(20) NOT NULL,
-	cantidad INTEGER NOT NULL,
-	CONSTRAINT FK_n_factura FOREIGN KEY (n_factura) REFERENCES Factura(n_factura),
-	CONSTRAINT FK_Producto FOREIGN KEY (producto) REFERENCES Productos(codigo_barras)
-	);
+CREATE TABLE Inventario (
+    id_inventario INTEGER PRIMARY KEY,
+    producto VARCHAR2(20) NOT NULL,
+    cantidad_disponible INTEGER,
+    fecha_llegada TIMESTAMP NOT NULL,
+    id_bodega INTEGER NOT NULL,
+    CONSTRAINT FK_id_bodega FOREIGN KEY (id_bodega) REFERENCES Bodega(id_bodega),
+    CONSTRAINT FK_id_producto FOREIGN KEY (producto) REFERENCES Productos(codigo_barras)
+);
 
+CREATE TABLE Factura (
+    n_Factura INTEGER PRIMARY KEY,
+    id_empleado INTEGER NOT NULL,
+    id_cliente INTEGER,
+    fecha_hora TIMESTAMP NOT NULL,
+    id_local INTEGER NOT NULL,
+    monto_pagado DECIMAL(10, 2) NOT NULL,
+    cambio DECIMAL(10, 2) NOT NULL,
+    sub_total DECIMAL(10, 2) NOT NULL,
+    gravado15 DECIMAL(10, 2) NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    CONSTRAINT FK_id_empleado FOREIGN KEY (id_empleado) REFERENCES Empleados(id_empleado),
+    CONSTRAINT FK_id_cliente FOREIGN KEY (id_cliente) REFERENCES Clientes(id_clientes),
+    CONSTRAINT FK_id_local FOREIGN KEY (id_local) REFERENCES Sucursales(idLocal)
+);
 
-CREATE TABLE Producto_mas_vendido(
-	id_mes INTEGER PRIMARY KEY,
-	id_Producto VARCHAR (20) NOT NULL,
-	mes INTEGER NOT NULL,
-	anio INTEGER NOT NULL,
-	cantidad INTEGER NOT NULL,
-	CONSTRAINT fk_id_producto_mas_vendido FOREIGN KEY (id_producto) REFERENCES productos(codigo_barras)
-	)
+CREATE TABLE detalle_compra (
+    id_detalleCompra INTEGER PRIMARY KEY,
+    n_factura INTEGER NOT NULL,
+    producto VARCHAR2(20) NOT NULL,
+    cantidad INTEGER NOT NULL,
+    CONSTRAINT FK_n_factura FOREIGN KEY (n_factura) REFERENCES Factura(n_Factura),
+    CONSTRAINT FK_Producto FOREIGN KEY (producto) REFERENCES Productos(codigo_barras)
+);
 
---INSERTS
-INSERT INTO Paises(descripcion) VALUES('Honduras'), ('Costa Rica'),('Panamá'),('Nicaragua'),('EL Salvador');
-INSERT INTO Departamentos(idPais,descripcion) VALUES(1,'Francisco Morazn'), (5,'San Salvador'),(1,'Atlantida'),(1,'Cortes'),(2,'San jose');
-INSERT INTO Municipios(idDepto,decripcion) VALUES(1,'Tegucigalpa'),(1,'Talanga'),(4,'San Pedro Sula'),(4,'Choloma'),(4,'Omoa');
-INSERT INTO Generos(descripcion) VALUES('Masculino'),('Femenino'),('Otro');
-INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES (1,1,'Walter', 'White','Heisenberg','Targaryen','1980-06-01','BRB@gmail.com');
-INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES  (1,1,'Pedro', 'Pica','Piedra','Roca','2000-06-01','pedro@gmail.com');
-INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES (1,2,'Loenel', 'Andres','Messi','Ronaldo','1999-06-01','messi@gmail.com');
-INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES(1,1,'Jonh', 'Snow','Aegon','Targaryen','1999-06-01','GOT@gmail.com');
-INSERT INTO Personas(id_lugarNacimiento,id_genero,P_nombre,S_nombre,P_apellido,S_apellido,fecha_nacimiento,correo)VALUES(1,4,'Daenerys ', 'Tormenta','Targaryen','Lopez','1998-06-01','GOTa@gmail.com');
-INSERT INTO Profesiones(descripcion,comentarios)VALUES('Abogado',''),('Ingeniero en Sistemas','que pro'),('Maestro',''),('Futbolista',''),('Arquitecto','');
+CREATE TABLE Producto_mas_vendido (
+    id_mes INTEGER PRIMARY KEY,
+    id_Producto VARCHAR2(20) NOT NULL,
+    mes INTEGER NOT NULL,
+    anio INTEGER NOT NULL,
+    cantidad INTEGER NOT NULL,
+    CONSTRAINT fk_id_producto_mas_vendido FOREIGN KEY (id_Producto) REFERENCES Productos(codigo_barras)
+);
 
-INSERT INTO Colores(descripcion)VALUES('Azul'),('Verde'),('Amarillo'),('Rojo'),('Negro');
-INSERT INTO Tallas(descripcion)VALUES('xs'),('s'),('m'),('l'),('xl'),('xxl'),('xxxl'),('xxs');
-INSERT INTO GeneroRopa(descripcion)VALUES('Femenino'),('Masculino'),('bebe'),('unisex');
-INSERT INTO Tipos(descripcion)VALUES('Camisa Formal'),('Camisa Polo'),('Camiseta'),('Pantalon Formal'),('Pantalon Mesclilla');
-INSERT INTO Marcas(descripcion)VALUES('Nike'),('Adidas'),('Flamingo'),('Joma'),('Ralph Lauren');
-INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'El General FM', '22909001', '0801-1903-229011', 'elGeneral@gmail.com');
-INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'Salvatore Style', '28909090', '9809-1903-229011', 'Salvatorel@gmail.com');
-INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'PieceArts', '22905555', '0819-1903-229011', 'PieceArts@gmail.com');
-INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(1, 'CautionStyle', '22955551', '0801-1903-229331', 'CautionS@gmail.com');
-INSERT INTO Proveedores(id_direccion, nombre_empresa, telefono, RTN, email)VALUES(4, 'Leopoldo', '22908501', '0801-1903-222220', 'Leopoldo@gmail.com');
-INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 1, 1, 1, 2, 1,'terreneitor');
-INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 2, 2, 1, 3, 2,'supra');
-INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 3, 3, 2, 5, 3,'configsistem');
-INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(1, 2, 2, 2, 3, 4,'System32');
-INSERT INTO DetallesRopa(id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto)VALUES(5, 3, 4, 3, 8, 5,'linuxlovers');
-SET IDENTITY_INSERT Productos ON INSERT INTO Productos(codigo_barras, precio, detalle) VALUES('F213T425ABC', 1099.00, 1),('P683T425ABC', 1199.00, 2),('M2563T425ABC', 1099.00, 3),('DI578T425ABC', 9999.00, 4),('JDIE7425ABC', 4075.99, 5) SET IDENTITY_INSERT Productos OFF;
+INSERT INTO Paises(descripcion) VALUES('Honduras');
+INSERT INTO Paises(descripcion) VALUES('Costa Rica');
+INSERT INTO Paises(descripcion) VALUES('Panamá');
+INSERT INTO Paises(descripcion) VALUES('Nicaragua');
+INSERT INTO Paises(descripcion) VALUES('EL Salvador');
 
-INSERT INTO Sucursales (idLocal, idMuncipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz) VALUES (1, 1, '08:00:00', '18:00:00', '22334455', 'sucursal1@example.com', 'ABCDE12345', 'Sucursal A', 1), (2, 2, '09:30:00', '17:30:00', '99887766', 'sucursal2@example.com', 'FGHIJ67890', 'Sucursal B', 0), (3, 3, '07:45:00', '19:00:00', '11223344', 'sucursal3@example.com', 'KLMNO54321', 'Sucursal C', 0), (4, 4, '08:15:00', '17:15:00', '77665544', 'sucursal4@example.com', 'PQRST67890', 'Sucursal D', 1),(5, 5, '09:00:00', '18:00:00', '99001122', 'sucursal5@example.com', 'UVWXYZ12345', 'Sucursal E', 0);
-INSERT INTO PuestosTrabajo (descripcion, comentario) VALUES ('Gerente de Proyectos', 'Encargado de liderar y coordinar proyectos estrategicos.'), ('Analista de Marketing', 'Responsable de realizar analisis de mercado y estrategias de marketing.'), ('Tecnico de Soporte', 'Brinda asistencia tecnica y resuelve problemas de los clientes.'), ('Disenador Grafico', 'Crea y disena materiales graficos para campanas publicitarias.'), ('Desarrollador de Software', 'Encargado de programar y desarrollar aplicaciones y software.');
-INSERT INTO Clientes (id_persona, id_profesion) VALUES (1, 1);
-INSERT INTO Clientes (id_persona, id_profesion) VALUES(2, 2);
-INSERT INTO Clientes (id_persona, id_profesion) VALUES(3, 3);
-INSERT INTO Clientes (id_persona, id_profesion) VALUES(4, 4);
-INSERT INTO Clientes (id_persona, id_profesion) VALUES(4, 5);
-INSERT INTO Clientes (id_persona, id_profesion,Tipo_Mayoritario) VALUES (1,1,1);
-INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES ( 1, 1, 1, 2, 1, 94345678, '08:00:00', '17:00:00', '08:00:00', 2500.00);
-INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 2, 2, 3, 2, 2, 98765432, '09:30:00', '18:30:00', '08:00:00', 2100.00); 
-INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 3, 3, 2, 4, 3, 94681357, '07:45:00', '16:45:00','08:00:00', 2300.00); 
-INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 4, 4, 5, 5, 5, 33579246, '08:15:00', '17:15:00','08:00:00', 2700.00);
-INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajas, Salario) VALUES( 5, 3, 4, 3, 4, 37481923, '09:00:00', '18:00:00','08:00:00', 2400.00);
-INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones) VALUES (1, '2023-08-06 10:30:00', '2023-08-06 15:45:00', 101, 'Art�culos recibidos para almacenamiento temporal.'), (2, '2023-08-07 09:15:00', '2023-08-07 16:30:00', 105, 'Nuevo inventario de productos electr�nicos.'), (3, '2023-08-08 11:00:00', '2023-08-08 17:20:00', 110, 'Art�culos enviados para distribuci�n.'), (4, '2023-08-09 08:45:00', '2023-08-09 15:15:00', 107, 'Inventario de productos perecederos.'), (5, '2023-08-10 12:30:00', '2023-08-10 17:00:00', 103, 'Art�culos recibidos para inspecci�n y reparaci�n.');
+INSERT INTO Departamentos(idPais, descripcion) VALUES(1, 'Francisco Morazán');
+INSERT INTO Departamentos(idPais, descripcion) VALUES(5, 'San Salvador');
+INSERT INTO Departamentos(idPais, descripcion) VALUES(1, 'Atlántida');
+INSERT INTO Departamentos(idPais, descripcion) VALUES(1, 'Cortés');
+INSERT INTO Departamentos(idPais, descripcion) VALUES(2, 'San José');
 
---SELECTS 
-SELECT * FROM Paises
-SELECT * FROM Departamentos
-SELECT * FROM Municipios
-SELECT * FROM Generos
-SELECT * FROM Personas
-SELECT * FROM Profesiones
-Select * from Colores
-SELECT * FROM Tallas
-SELECT * FROM  GeneroRopa
-SELECT * FROM  Tipos
-SELECT * FROM  Marcas
-SELECT * FROM  Proveedores
-SELECT * FROM  Municipios
-SELECT * FROM DetallesRopa
-SELECT * fROM Productos
-SELECT * FROM Sucursales
-SELECT * FROM PuestosTrabajo
-SELECT * FROM Clientes 
-SELECT * FROM Empleados
-SELECT * FROM Bodega
+INSERT INTO Municipios(idDepto, descripcion) VALUES(1, 'Tegucigalpa');
+INSERT INTO Municipios(idDepto, descripcion) VALUES(1, 'Talanga');
+INSERT INTO Municipios(idDepto, descripcion) VALUES(4, 'San Pedro Sula');
+INSERT INTO Municipios(idDepto, descripcion) VALUES(4, 'Choloma');
+INSERT INTO Municipios(idDepto, descripcion) VALUES(4, 'Omoa');
+
+INSERT INTO Generos(descripcion) VALUES('Masculino');
+INSERT INTO Generos(descripcion) VALUES('Femenino');
+INSERT INTO Generos(descripcion) VALUES('Otro');
+
+INSERT INTO Personas(id_lugarNacimiento, id_genero, P_nombre, S_nombre, P_apellido, S_apellido, fecha_nacimiento, correo) VALUES(1, 1, 'Walter', 'White', 'Heisenberg', 'Targaryen', TO_DATE('1980-06-01', 'YYYY-MM-DD'), 'BRB@gmail.com');
+INSERT INTO Personas(id_lugarNacimiento, id_genero, P_nombre, S_nombre, P_apellido, S_apellido, fecha_nacimiento, correo) VALUES(1, 1, 'Pedro', 'Pica', 'Piedra', 'Roca', TO_DATE('2000-06-01', 'YYYY-MM-DD'), 'pedro@gmail.com');
+INSERT INTO Personas(id_lugarNacimiento, id_genero, P_nombre, S_nombre, P_apellido, S_apellido, fecha_nacimiento, correo) VALUES(1, 1, 'Loenel', 'Andres', 'Messi', 'Ronaldo', TO_DATE('1999-06-01', 'YYYY-MM-DD'), 'messi@gmail.com');
+INSERT INTO Personas(id_lugarNacimiento, id_genero, P_nombre, S_nombre, P_apellido, S_apellido, fecha_nacimiento, correo) VALUES(1, 1, 'Jonh', 'Snow', 'Aegon', 'Targaryen', TO_DATE('1999-06-01', 'YYYY-MM-DD'), 'GOT@gmail.com');
+INSERT INTO Personas(id_lugarNacimiento, id_genero, P_nombre, S_nombre, P_apellido, S_apellido, fecha_nacimiento, correo) VALUES(1, 2, 'Daenerys ', 'Tormenta', 'Targaryen', 'Lopez', TO_DATE('1998-06-01', 'YYYY-MM-DD'), 'GOTa@gmail.com');
+
+-- Tabla profesiones
+INSERT INTO Profesiones(idprofesion, descripcion, comentarios) VALUES(1, 'Abogado', NULL);
+INSERT INTO Profesiones(idprofesion, descripcion, comentarios) VALUES(2, 'Ingeniero en Sistemas', 'que pro');
+INSERT INTO Profesiones(idprofesion, descripcion, comentarios) VALUES(3, 'Maestro', NULL);
+INSERT INTO Profesiones(idprofesion, descripcion, comentarios) VALUES(4, 'Futbolista', NULL);
+INSERT INTO Profesiones(idprofesion, descripcion, comentarios) VALUES(5, 'Arquitecto', NULL);
 
 
+
+-- tabla Colores
+INSERT INTO Colores(id_colores, descripcion) VALUES(1, 'Azul');
+INSERT INTO Colores(id_colores, descripcion) VALUES(2, 'Verde');
+INSERT INTO Colores(id_colores, descripcion) VALUES(3, 'Amarillo');
+INSERT INTO Colores(id_colores, descripcion) VALUES(4, 'Rojo');
+INSERT INTO Colores(id_colores, descripcion) VALUES(5, 'Negro');
+
+
+-- tabla Tallas
+INSERT INTO Tallas(id_talla, descripcion) VALUES(1, 'xs');
+INSERT INTO Tallas(id_talla, descripcion) VALUES(2, 's');
+INSERT INTO Tallas(id_talla, descripcion) VALUES(3, 'm');
+INSERT INTO Tallas(id_talla, descripcion) VALUES(4, 'l');
+INSERT INTO Tallas(id_talla, descripcion) VALUES(5, 'xl');
+INSERT INTO Tallas(id_talla, descripcion) VALUES(6, 'xxl');
+INSERT INTO Tallas(id_talla, descripcion) VALUES(7, 'xxxl');
+INSERT INTO Tallas(id_talla, descripcion) VALUES(8, 'xxs');
+
+-- tabla GeneroRopa
+INSERT INTO GeneroRopa(id_gen_ropa, descripcion) VALUES(1, 'Femenino');
+INSERT INTO GeneroRopa(id_gen_ropa, descripcion) VALUES(2, 'Masculino');
+INSERT INTO GeneroRopa(id_gen_ropa, descripcion) VALUES(3, 'bebe');
+INSERT INTO GeneroRopa(id_gen_ropa, descripcion) VALUES(4, 'unisex');
+
+-- tabla Tipos
+INSERT INTO Tipos(id_tipos, descripcion) VALUES(1,'Camisa Formal');
+INSERT INTO Tipos(id_tipos, descripcion) VALUES(2, 'Camisa Polo');
+INSERT INTO Tipos(id_tipos, descripcion) VALUES(3, 'Camiseta');
+INSERT INTO Tipos(id_tipos, descripcion) VALUES(4, 'Pantalon Formal');
+INSERT INTO Tipos(id_tipos, descripcion) VALUES(5, 'Pantalon Mesclilla');
+
+-- tabla Marcas
+INSERT INTO Marcas(id_marcas, descripcion) VALUES(1, 'Nike');
+INSERT INTO Marcas(id_marcas, descripcion) VALUES(2, 'Adidas');
+INSERT INTO Marcas(id_marcas, descripcion) VALUES(3, 'Flamingo');
+INSERT INTO Marcas(id_marcas, descripcion) VALUES(4, 'Joma');
+INSERT INTO Marcas(id_marcas, descripcion) VALUES(5,'Ralph Lauren');
+
+-- tabla Proveedores
+INSERT INTO Proveedores(id_proveedores, id_direccion, nombre_empresa, telefono, RTN, email) VALUES(1, 1, 'El General FM', '22909001', '0801-1903-229011', 'elGeneral@gmail.com');
+INSERT INTO Proveedores(id_proveedores, id_direccion, nombre_empresa, telefono, RTN, email) VALUES(2, 1, 'Salvatore Style', '28909090', '9809-1903-229011', 'Salvatorel@gmail.com');
+INSERT INTO Proveedores(id_proveedores, id_direccion, nombre_empresa, telefono, RTN, email) VALUES(3, 1, 'PieceArts', '22905555', '0819-1903-229011', 'PieceArts@gmail.com');
+INSERT INTO Proveedores(id_proveedores, id_direccion, nombre_empresa, telefono, RTN, email) VALUES(4, 1, 'CautionStyle', '22955551', '0801-1903-229331', 'CautionS@gmail.com');
+INSERT INTO Proveedores(id_proveedores, id_direccion, nombre_empresa, telefono, RTN, email) VALUES(5, 4, 'Leopoldo', '22908501', '0801-1903-222220', 'Leopoldo@gmail.com');
+
+-- tabla DetallesRopa
+INSERT INTO DetallesRopa(id_detalle, id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto) VALUES(1, 1, 1, 1, 1, 2, 1,'terreneitor');
+INSERT INTO DetallesRopa(id_detalle, id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto) VALUES(2, 1, 2, 2, 1, 3, 2,'supra');
+INSERT INTO DetallesRopa(id_detalle, id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto) VALUES(3, 1, 3, 3, 2, 5, 3,'configsistem');
+INSERT INTO DetallesRopa(id_detalle, id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto) VALUES(4, 1, 2, 2, 2, 3, 4,'System32');
+INSERT INTO DetallesRopa(id_detalle, id_marca, id_tipo, id_color, id_genero, id_talla, id_proveedor, nombre_producto) VALUES(5, 5, 3, 4, 3, 8, 5,'linuxlovers');
+
+-- tabla Productos (falta descuento y porcentaje de descuento)
+INSERT INTO Productos(codigo_barras, precio, detalle) VALUES('F213T425ABC', 1099.00, 1);
+INSERT INTO Productos(codigo_barras, precio, detalle) VALUES('P683T425ABC', 1199.00, 2);
+INSERT INTO Productos(codigo_barras, precio, detalle) VALUES('M2563T425ABC', 1099.00, 3);
+INSERT INTO Productos(codigo_barras, precio, detalle) VALUES('DI578T425ABC', 9999.00, 4);
+INSERT INTO Productos(codigo_barras, precio, detalle) VALUES('JDIE7425ABC', 4075.99, 5);
+
+-- Tabla de Sucursales
+INSERT INTO Sucursales (idLocal, idMunicipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz) VALUES (1, 1, '08:00:00', '18:00:00', '22334455', 'sucursal1@example.com', 'ABCDE12345', 'Sucursal A', 1);
+INSERT INTO Sucursales (idLocal, idMunicipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz) VALUES (2, 2, '09:30:00', '17:30:00', '99887766', 'sucursal2@example.com', 'FGHIJ67890', 'Sucursal B', 0);
+INSERT INTO Sucursales (idLocal, idMunicipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz) VALUES (3, 3, '07:45:00', '19:00:00', '11223344', 'sucursal3@example.com', 'KLMNO54321', 'Sucursal C', 0);
+INSERT INTO Sucursales (idLocal, idMunicipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz) VALUES (4, 4, '08:15:00', '17:15:00', '77665544', 'sucursal4@example.com', 'PQRST67890', 'Sucursal D', 1);
+INSERT INTO Sucursales (idLocal, idMunicipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz) VALUES (5, 5, '09:00:00', '18:00:00', '99001122', 'sucursal5@example.com', 'UVWXYZ12345', 'Sucursal E', 0);
+
+-- Tabla Puestos de Trabajo
+INSERT INTO PuestosTrabajo (idPuesto, descripcion, comentario)
+SELECT '1', 'Gerente de Proyectos', 'Encargado de liderar y coordinar proyectos estrategicos.' FROM dual UNION ALL
+SELECT '2', 'Analista de Marketing', 'Responsable de realizar analisis de mercado y estrategias de marketing.' FROM dual UNION ALL
+SELECT '3', 'Tecnico de Soporte', 'Brinda asistencia tecnica y resuelve problemas de los clientes.' FROM dual UNION ALL
+SELECT '4', 'Disenador Grafico', 'Crea y disena materiales graficos para campanas publicitarias.' FROM dual UNION ALL
+SELECT '5', 'Desarrollador de Software', 'Encargado de programar y desarrollar aplicaciones y software.' FROM dual;
+
+
+
+-- Tabla Profesiones (No dan Tipo_Mayoritario)
+INSERT INTO Clientes (id_clientes, id_persona, id_profesion) VALUES (1, 1, 1);
+INSERT INTO Clientes (id_clientes, id_persona, id_profesion) VALUES(2, 2, 2);
+INSERT INTO Clientes (id_clientes, id_persona, id_profesion) VALUES(3, 3, 3);
+INSERT INTO Clientes (id_clientes, id_persona, id_profesion) VALUES(4, 4, 4);
+INSERT INTO Clientes (id_clientes, id_persona, id_profesion) VALUES(5, 4, 5);
+INSERT INTO Clientes (id_clientes, id_persona, id_profesion,Tipo_Mayoritario) VALUES (1,1,1,1);
+
+-- Tabla Empleados
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajadas, Salario)
+VALUES (1, 1, 1, 2, 1, 94345678, '08:00:00', '17:00:00', INTERVAL '8' HOUR, 2500.00);
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajadas, Salario)
+VALUES( 2, 2, 3, 2, 2, 98765432, '09:30:00', '18:30:00', INTERVAL '8' HOUR, 2100.00);
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajadas, Salario)
+VALUES( 3, 3, 2, 4, 3, 94681357, '07:45:00', '16:45:00', INTERVAL '8' HOUR, 2300.00);
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajadas, Salario)
+VALUES( 4, 4, 5, 5, 5, 33579246, '08:15:00', '17:15:00', INTERVAL '8' HOUR, 2700.00);
+INSERT INTO Empleados (id_empleado, id_persona, id_puesto, id_profesion, id_tienda, telefono, horaEntrada, horaSalida, horasTrabajadas, Salario)
+VALUES( 5, 3, 4, 3, 4, 37481923, '09:00:00', '18:00:00', INTERVAL '8' HOUR, 2400.00);
+
+
+-- Tabla Bodega
+INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones)
+VALUES 
+    (1, TO_TIMESTAMP('2023-08-06 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-08-06 15:45:00', 'YYYY-MM-DD HH24:MI:SS'), 101, 'Artículos recibidos para almacenamiento temporal.');
+INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones)
+VALUES 
+    (2, TO_TIMESTAMP('2023-08-07 09:15:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-08-07 16:30:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 'Nuevo inventario de productos electrónicos.');
+INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones)
+VALUES 
+    (3, TO_TIMESTAMP('2023-08-08 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-08-08 17:20:00', 'YYYY-MM-DD HH24:MI:SS'), 110, 'Artículos enviados para distribución.');
+INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones)
+VALUES 
+    (4, TO_TIMESTAMP('2023-08-09 08:45:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-08-09 15:15:00', 'YYYY-MM-DD HH24:MI:SS'), 107, 'Inventario de productos perecederos.');
+INSERT INTO Bodega (id_bodega, fecha_entrada, fecha_salida, id_empleado_ingreso, observaciones)
+VALUES 
+    (5, TO_TIMESTAMP('2023-08-10 12:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2023-08-10 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 103, 'Artículos recibidos para inspección y reparación.');
+
+
+
+SELECT * FROM paises;
+SELECT * FROM Departamentos;
+SELECT * FROM Municipios;
+SELECT * FROM Generos;
+SELECT * FROM Personas;
+SELECT * FROM Sucursales;
+SELECT * FROM Profesiones;
+SELECT * FROM PuestosTrabajo;
+SELECT * FROM Clientes;
+SELECT * FROM Empleados;
+SELECT * FROM Tallas;
+SELECT * FROM GeneroRopa;
+SELECT * FROM Colores;
+SELECT * FROM Tipos;
+SELECT * FROM Marcas;
+SELECT * FROM Proveedores;
+SELECT * FROM DetallesRopa;
+SELECT * FROM Productos;
+SELECT * FROM Bodega;
+
+-- Falta informacion
+SELECT * FROM Inventario;
+SELECT * FROM Factura;
+SELECT * FROM detalle_compra;
+SELECT * FROM Producto_mas_vendido;
