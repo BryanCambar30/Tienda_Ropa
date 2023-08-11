@@ -18,5 +18,10 @@ namespace TiendaRopa_V1
             Clases.ConexionSQLServer objetoConexion = new Clases.ConexionSQLServer();
             objetoConexion.establecerConexion();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
