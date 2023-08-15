@@ -464,3 +464,136 @@ END
 --END; 
 
 --EXEC ObtenerProductoMasVendido;
+
+-- =============================================
+-- Author:		<Mario Villanueva>
+-- Create date: 08/15/2023
+-- Description: proceso para insertar un nuevo cliente 
+-- =============================================
+CREATE PROCEDURE RegistrarNuevoCliente
+    @id_lugarNacimiento INTEGER,
+    @id_genero INTEGER,
+    @P_nombre VARCHAR(25),
+    @S_nombre VARCHAR(25),
+    @P_apellido VARCHAR(25),
+    @S_apellido VARCHAR(25),
+    @fecha_nacimiento DATE,
+    @correo VARCHAR(100),
+    @id_profesion INTEGER,
+    @Tipo_Mayoritario BIT
+AS
+BEGIN
+    DECLARE @id_persona INTEGER;
+
+    -- Insertar en la tabla Personas
+    INSERT INTO Personas (id_lugarNacimiento, id_genero, P_nombre, S_nombre, P_apellido, S_apellido, fecha_nacimiento, correo)
+    VALUES (@id_lugarNacimiento, @id_genero, @P_nombre, @S_nombre, @P_apellido, @S_apellido, @fecha_nacimiento, @correo);
+    
+	-- Obtener el ID de la persona recién agragada
+    SET @id_persona = SCOPE_IDENTITY();
+
+    -- Insertar en la tabla Clientes
+    INSERT INTO Clientes (id_persona, id_profesion, Tipo_Mayoritario)
+    VALUES (@id_persona, @id_profesion, @Tipo_Mayoritario);
+END
+go
+
+-- =============================================
+-- Author:		<mario villanueva>
+-- Create date: <12/08/2023>
+-- Description:	proceso para buscar un cliente
+-- =============================================
+CREATE PROCEDURE Search_cliente_
+@P_search VARCHAR (50) 
+
+AS
+BEGIN
+
+	select c.id_clientes,(p.P_nombre+' '+p.S_nombre+' '+p.P_apellido+' '+p.S_apellido)nombre_complet, 
+		pr.descripcion,p.correo,p.fecha_nacimiento,g.descripcion,(mun.decripcion+', '+dep.descripcion+', '+pa.descripcion) direccion,c.Tipo_Mayoritario
+		from Clientes c
+		inner join Personas p on p.idPersona=c.id_persona
+		inner join Profesiones pr on pr.idProfesion=c.id_profesion
+		inner join Generos g on g.id_genero=p.id_genero
+		inner join Municipios mun on mun.idMuncipio=p.id_lugarNacimiento
+		inner join Departamentos dep on dep.idDepto=mun.idMuncipio
+		inner join Paises pa on pa.idPais=dep.idPais
+		where 
+		p.P_nombre LIKE '%' +@P_search + '%'
+		OR p.S_nombre LIKE '%' +@P_search + '%'
+		OR p.P_apellido  LIKE '%' +@P_search + '%'
+		OR p.P_apellido  LIKE '%' +@P_search + '%'
+		OR p.S_apellido LIKE '%' +@P_search + '%'
+		OR pr.descripcion LIKE '%' +@P_search + '%'
+		OR p.correo LIKE '%' +@P_search + '%'
+		OR g.descripcion LIKE '%' +@P_search + '%'
+		OR dep.descripcion LIKE '%' +@P_search + '%'
+		OR mun.decripcion LIKE '%' +@P_search + '%'
+		OR pa.descripcion LIKE '%' +@P_search + '%'
+END
+GO
+-- =============================================
+-- Author:	Mario Villanueva
+-- Create date: 15/08/2023
+-- Description:	proceso para agregar un producto con sus detalles y se almacena en inventario 
+-- =============================================
+CREATE PROCEDURE RegistrarProducto_AgregarInventario
+    @codigo_barras VARCHAR(20),
+    @precio DECIMAL(10, 2),
+    @id_talla INTEGER,
+    @id_genero INTEGER,
+    @id_color INTEGER,
+    @id_tipo INTEGER,
+    @id_marca INTEGER,
+    @id_proveedor INTEGER,
+	@cantidad_disponible INTEGER,
+    @fecha_llegada DATETIME,
+    @id_bodega INTEGER,
+    @nombre_producto VARCHAR(55)
+AS
+BEGIN
+    DECLARE @id_detalle INTEGER;
+    -- Insertar en la tabla DetallesRopa
+    INSERT INTO DetallesRopa (id_talla, id_genero, id_color, id_tipo, id_marca, id_proveedor, nombre_producto)
+    VALUES (@id_talla, @id_genero, @id_color, @id_tipo, @id_marca, @id_proveedor, @nombre_producto);
+    SET @id_detalle = SCOPE_IDENTITY();
+
+    -- Insertar en la tabla Productos
+    INSERT INTO Productos (codigo_barras, precio, detalle)
+    VALUES (@codigo_barras, @precio, @id_detalle);
+
+    -- Insertar en la tabla Inventario
+    INSERT INTO Inventario (producto, cantidad_disponible, fecha_llegada, id_bodega)--id producto esta asi en mi base de datos pero tenes que cambiar eso 
+    VALUES (@codigo_barras, @cantidad_disponible, @fecha_llegada, @id_bodega);
+END
+go
+
+-- =============================================
+-- Author:		<Author,Mario Villanueva>
+-- Create date: <Create Date,13/08/2023>
+-- Description:	<procedimiento para buscar productos>
+-- =============================================
+CREATE PROCEDURE Search_product_prototipo
+@P_search Varchar (50)
+	
+AS
+BEGIN
+
+SELECT pr.codigo_barras,dr.nombre_producto,ta.descripcion,ti.descripcion,co.descripcion,ma.descripcion,gr.descripcion,pr.precio,inv.cantidad_disponible FROM DetallesRopa dr
+	inner join  Productos pr on pr.detalle=dr.id_detalle
+	inner join Tallas ta on ta.id_talla=dr.id_talla
+	inner join Tipos ti on ti.id_tipos=dr.id_tipo
+	inner join Colores co on co.id_colores=dr.id_color
+	inner join Marcas ma on ma.id_marcas=dr.id_marca
+	inner join GeneroRopa gr on gr.id_gen_ropa=dr.id_genero
+	inner join Inventario inv on inv.id_inventario=pr.codigo_barras
+	where dr.nombre_producto LIKE '%' +@P_search + '%'
+	or ta.descripcion LIKE '%' +@P_search + '%'
+	or ti.descripcion LIKE '%' +@P_search + '%'
+	or co.descripcion LIKE '%' +@P_search + '%'
+	or ma.descripcion LIKE '%' +@P_search + '%'
+	or gr.descripcion LIKE '%' +@P_search + '%'
+	or pr.precio LIKE '%' +@P_search + '%'
+
+END
+GO
