@@ -573,7 +573,7 @@ go
 -- Create date: <Create Date,13/08/2023>
 -- Description:	<procedimiento para buscar productos>
 -- =============================================
-CREATE PROCEDURE Search_product_prototipo
+CREATE PROCEDURE Search_producto
 @P_search Varchar (50)
 	
 AS
@@ -586,7 +586,7 @@ SELECT pr.codigo_barras,dr.nombre_producto,ta.descripcion,ti.descripcion,co.desc
 	inner join Colores co on co.id_colores=dr.id_color
 	inner join Marcas ma on ma.id_marcas=dr.id_marca
 	inner join GeneroRopa gr on gr.id_gen_ropa=dr.id_genero
-	inner join Inventario inv on inv.id_inventario=pr.codigo_barras
+	inner join Inventario inv on inv.producto=pr.codigo_barras
 	where dr.nombre_producto LIKE '%' +@P_search + '%'
 	or ta.descripcion LIKE '%' +@P_search + '%'
 	or ti.descripcion LIKE '%' +@P_search + '%'
