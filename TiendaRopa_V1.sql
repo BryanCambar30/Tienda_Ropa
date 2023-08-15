@@ -204,6 +204,8 @@ CREATE TABLE detalle_compra(
 	CONSTRAINT FK_n_factura FOREIGN KEY (n_factura) REFERENCES Factura(n_factura),
 	CONSTRAINT FK_Producto FOREIGN KEY (producto) REFERENCES Productos(codigo_barras)
 	);
+ALTER TABLE detalle_compra
+ADD PrecioProducto DECIMAL(10,2)
 
 CREATE TABLE Producto_mas_vendido(
 	id_Producto VARCHAR (20) PRIMARY KEY,
@@ -348,6 +350,95 @@ BEGIN
 END;
 
 EXEC ActualizarProductosMasVendidos @mes = 8, @anio = 2023;
+
+
+--============Funcion Factura y aplicacion de descuento======================--
+CREATE FUNCTION TotalConDescuentoEnFactura
+(
+	@precioTotal DECIMAL (10,2),
+	@Descuento DECIMAL(5,2)
+)
+RETURNS DECIAML (10,2)
+AS
+BEGIN
+	DECLARE @TotalConDescuento DECIMAL(10,2);
+	SET @TotalConDescuento = @precioTotal - (@precioTotal * (@Descuento / 100));
+	RETURNS @TotalConDescuento;
+END
+
+DECLARE @precioTotal DECIMAL(18, 2) = 300;
+DECLARE @Descuento DECIMAL(5, 2) = 10;
+
+SELECT @PrecioTotal AS PrecioTotal,
+       @Descuento AS Descuento,
+       dbo.TotalConDescuentoEnFactura(@PrecioTotal, @Descuento) AS TotalConDescuento;
+
+
+--=======================Factura=======================================------------------
+CREATE TYPE dbo.ProductoDetalleTableType AS TABLE
+(
+    codigo_barras VARCHAR(20),
+    Cantidad INT
+);
+
+CREATE PROCEDURE GenerarFactura
+	@cliente_id INT,
+	@empleado_id INT,
+	@id_local int,
+	@TotalPagado DECIMAL(10,2),
+	@gravado DECIMAL(10,2),
+	@Descuento DECIMAL(5,2),
+	@ProductosDetalle dbo.ProductoDetalleTableType READONLY
+AS
+BEGIN
+	DECLARE @Factura_id int;
+	DECLARE @Subtotal DECIMAL(18, 2);
+    DECLARE @Total DECIMAL(18, 2);
+    DECLARE @ISV DECIMAL(18, 2);
+    DECLARE @Cambio DECIMAL(18, 2);
+	DECLARE @TotalConDescuento DECIMAL(10,2);
+	CREATE TABLE #ProductosDetalle --crea una tabla temporal para tener los detalles de todos los productos de la compra
+	(        
+		codigo_barras varchar(20),
+		Cantidad int
+	)
+	BEGIN TRANSACTION;
+	
+    INSERT INTO #ProductosDetalle(codigo_barras, Cantidad)
+    SELECT codigo_barras, Cantidad
+    FROM @ProductosDetalle;
+
+	INSERT INTO Factura F (id_cliente, id_empleado, id_local, fecha_hora)
+	VALUES (@cliente_id, @empleado_id, @id_local, GETDATE());
+
+	SET @Factura_id = SCOPE_IDENTITY(); --OBTIENE EL NUMERO DE FACTURA RECIEN HECHA O INSERTADA
+
+	INSERT INTO detalle_compra(n_factura, producto, cantidad, PrecioProducto)
+	SELECT @Factura_id, PD.codigo_barras, PD.Cantidad, P.Precio
+	FROM #ProductosDetalle PD
+	INNER JOIN Productos P ON PD.codigo_barras = P.codigo_barras;
+
+	SET @Subtotal = (SELECT SUM(cantidad * PrecioProducto) FROM detalle_compra WHERE n_factura = @Factura_id); --calcucla el sub total sin el isv 
+
+	set @ISV = @Subtotal * (@Gravado / 100); --clacula impuesto sobre la venta, no esta sujeto a que sea del 15 por que se puede cambiar en el futuro
+
+	set @Total = @Subtotal + @ISV; --calcula el total a pagar
+
+	SET @TotalConDescuento = @Total - (@Total * (@Descuento / 100));
+	
+	SET @Total = @TotalConDescuento
+ 
+	
+	UPDATE Factura
+	SET sub_total = @Subtotal,
+		gravado15 = @ISV,
+		total = @Total
+	WHERE n_Factura = @Factura_id
+
+	COMMIT;
+	SELECT @Factura_id AS NumeroFactura;
+	DROP TABLE #ProductosDetalle;
+END
 
 
 --CREATE PROCEDURE ObtenerProductoMasVendido
