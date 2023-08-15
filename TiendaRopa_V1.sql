@@ -522,7 +522,6 @@ BEGIN
 		p.P_nombre LIKE '%' +@P_search + '%'
 		OR p.S_nombre LIKE '%' +@P_search + '%'
 		OR p.P_apellido  LIKE '%' +@P_search + '%'
-		OR p.P_apellido  LIKE '%' +@P_search + '%'
 		OR p.S_apellido LIKE '%' +@P_search + '%'
 		OR pr.descripcion LIKE '%' +@P_search + '%'
 		OR p.correo LIKE '%' +@P_search + '%'
