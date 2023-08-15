@@ -206,13 +206,17 @@ CREATE TABLE detalle_compra(
 	);
 
 CREATE TABLE Producto_mas_vendido(
-	id_mes INTEGER PRIMARY KEY,
-	id_Producto VARCHAR (20) NOT NULL,
-	mes INTEGER NOT NULL,
-	anio INTEGER NOT NULL,
+	id_Producto VARCHAR (20) PRIMARY KEY,
 	cantidad INTEGER NOT NULL,
+	Fecha DATETIME NOT NULL,
 	CONSTRAINT fk_id_producto_mas_vendido FOREIGN KEY (id_producto) REFERENCES productos(codigo_barras)
 	)
+
+ALTER TABLE Producto_mas_vendido
+ADD Fecha DATETIME NULL;
+
+ALTER TABLE Empleados
+ADD password_hash VARCHAR(64), password_salt VARCHAR(25);
 
 DECLARE @Password VARCHAR(50);
 DECLARE @Salt VARCHAR(25);
@@ -226,8 +230,7 @@ UPDATE Empleados
 SET password_hash = @Hash, password_salt = @Salt
 Where id_empleado = 2;
 
-ALTER TABLE Empleados
-ADD password_hash VARCHAR(64), password_salt VARCHAR(25);
+
 
 --INSERTS
 INSERT INTO Paises(descripcion) VALUES('Honduras'), ('Costa Rica'),('Panamá'),('Nicaragua'),('EL Salvador');
@@ -285,7 +288,7 @@ INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VAL
 INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VALUES(3, 3, 'M2563T425ABC', 8);
 INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VALUES(4, 4, 'DI578T425ABC', 15);
 INSERT INTO detalle_compra (id_detalleCOmpra, n_factura, producto, cantidad) VALUES(5, 5, 'JDIE7425ABC', 20);
-INSERT INTO Producto_mas_vendido (id_mes, id_Producto, mes, anio, cantidad) VALUES (1, 'F213T425ABC', 8, 2023, 120), (2, 'P683T425ABC', 8, 2023, 90), (3, 'M2563T425ABC', 8, 2023, 150), (4, 'DI578T425ABC', 8, 2023, 200), (5, 'JDIE7425ABC', 8, 2023, 80);
+
 
 --SELECTS 
 SELECT * FROM Paises
@@ -312,3 +315,61 @@ SELECT * FROM Inventario
 SELECT * FROM Producto_mas_vendido
 SELECT * FROM Factura
 SELECT * FROM detalle_compra
+
+
+--Procedimientos Almacenados
+--=====Almacenar automaticamente el producto mas vendido a la tambla 
+CREATE PROCEDURE ActualizarProductosMasVendidos
+    @Mes INT,
+    @Anio INT
+AS
+BEGIN
+    DECLARE @FechaInicio DATETIME;
+    DECLARE @FechaFin DATETIME;
+
+    SET @FechaInicio = DATEADD(MONTH, @Mes - 1, DATEADD(YEAR, @Anio - 1900, 0));
+    SET @FechaFin = DATEADD(MONTH, 1, @FechaInicio);
+
+    TRUNCATE TABLE producto_mas_vendido; -- Borra los datos existentes en la tabla producto_mas_vendido
+
+    INSERT INTO producto_mas_vendido (id_Producto, Cantidad, Fecha ) -- Insertar nuevos datos desde la tabla Factura
+    SELECT TOP 50
+        DC.Producto,
+        SUM(DC.Cantidad) AS Cantidad,
+		F.fecha_hora
+    FROM detalle_compra DC
+	INNER JOIN Factura F ON dc.n_factura = f.n_Factura
+	INNER JOIN (Productos INNER JOIN DetallesRopa ON detalle = id_detalle) ON producto = codigo_barras
+    WHERE fecha_hora >= @FechaInicio AND fecha_hora < @FechaFin
+    GROUP BY producto, nombre_producto, F.fecha_hora
+    ORDER BY Cantidad DESC;
+
+	SELECT * FROM Producto_mas_vendido 
+END;
+
+EXEC ActualizarProductosMasVendidos @mes = 8, @anio = 2023;
+
+
+--CREATE PROCEDURE ObtenerProductoMasVendido
+	--@Mes int,
+	--@anio int
+ --AS
+--BEGIN 
+	--DECLARE @FechaInicio DATETIME;
+    --DECLARE @FechaFin DATETIME
+
+	--SET @FechaInicio = DATEADD(MONTH, @Mes - 1, DATEADD(YEAR, @anio - 1900, 0));
+	--SET @FechaFin = DATEADD(MONTH, DATEadd(MONTH, 1, @FechaInicio);
+
+    --SELECT TOP 10
+		--id_Producto,
+		--nombre_producto,
+		--SUM(cantidad) AS TotalVendido
+	--FROM Producto_mas_vendido PV
+	--INNER JOIN ( Productos INNER JOIN DetallesRopa ON id_detalle = id_detalle) ON id_Producto = codigo_barras
+	--WHERE Fecha >= @FechaInicio AND Fecha < @FechaFin
+	--GROUP BY  id_Producto, nombre_producto
+	--ORDER BY TotalVendido DESC;
+--END; 
+
+--EXEC ObtenerProductoMasVendido;
