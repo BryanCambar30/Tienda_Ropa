@@ -70,13 +70,13 @@
             this.conectarSqlServerToolStripMenuItem.Name = "conectarSqlServerToolStripMenuItem";
             this.conectarSqlServerToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.conectarSqlServerToolStripMenuItem.Text = "Conectar SqlServer ";
+            this.conectarSqlServerToolStripMenuItem.Click += new System.EventHandler(this.conectarSqlServerToolStripMenuItem_Click_1);
             // 
             // conectarOracleDBToolStripMenuItem
             // 
             this.conectarOracleDBToolStripMenuItem.Name = "conectarOracleDBToolStripMenuItem";
             this.conectarOracleDBToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.conectarOracleDBToolStripMenuItem.Text = "Conectar Oracle DB";
-            this.conectarOracleDBToolStripMenuItem.Click += new System.EventHandler(this.conectarOracleDBToolStripMenuItem_Click);
             // 
             // configuracionToolStripMenuItem
             // 
@@ -117,7 +117,6 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(270, 31);
             this.textBox3.TabIndex = 6;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label3
             // 
@@ -137,7 +136,6 @@
             this.textBox2.PasswordChar = '*';
             this.textBox2.Size = new System.Drawing.Size(270, 31);
             this.textBox2.TabIndex = 3;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // Form1
             // 

@@ -17,12 +17,13 @@ namespace TiendaRopa_V1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Clases.ConexionSQLServer objetoConexion = new Clases.ConexionSQLServer();
-            objetoConexion.establecerConexion();
-            SqlCommand cmd = new SqlCommand("EmpledoValidacion", objetoConexion.establecerConexion)
+            //Clases.ConexionSQLServer objetoConexion = new Clases.ConexionSQLServer();
+            //objetoConexion.establecerConexion();
+            SqlCommand cmd = new SqlCommand("EmpledoValidacion")
             {
                 CommandType = System.Data.CommandType.StoredProcedure
             };
+
             cmd.Parameters.Add("@id_Empleado", System.Data.SqlDbType.Int).Value = textBox3;
             cmd.Parameters.Add("@contraseña", System.Data.SqlDbType.VarChar, 50).Value = textBox2;
                 SqlDataReader dr = cmd.ExecuteReader();
@@ -35,5 +36,11 @@ namespace TiendaRopa_V1
                 }
                 cmd.Connection.Close();
             }
+
+        private void conectarSqlServerToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Clases.ConexionSQLServer objetoConexion = new Clases.ConexionSQLServer();
+            objetoConexion.establecerConexion();
+        }
     }
 }
