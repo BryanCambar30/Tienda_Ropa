@@ -353,25 +353,25 @@ EXEC ActualizarProductosMasVendidos @mes = 8, @anio = 2023;
 
 
 --============Funcion Factura y aplicacion de descuento======================--
-CREATE FUNCTION TotalConDescuentoEnFactura
-(
-	@precioTotal DECIMAL (10,2),
-	@Descuento DECIMAL(5,2)
-)
-RETURNS DECIAML (10,2)
-AS
-BEGIN
-	DECLARE @TotalConDescuento DECIMAL(10,2);
-	SET @TotalConDescuento = @precioTotal - (@precioTotal * (@Descuento / 100));
-	RETURNS @TotalConDescuento;
-END
+--CREATE FUNCTION TotalConDescuentoEnFactura
+--(
+	--@precioTotal DECIMAL (10,2),
+	--@Descuento DECIMAL(5,2)
+--)
+--RETURNS DECIAML (10,2)
+--AS
+--BEGIN
+	--DECLARE @TotalConDescuento DECIMAL(10,2);
+	--SET @TotalConDescuento = @precioTotal - (@precioTotal * (@Descuento / 100));
+	--RETURNS @TotalConDescuento;
+--END
 
-DECLARE @precioTotal DECIMAL(18, 2) = 300;
-DECLARE @Descuento DECIMAL(5, 2) = 10;
+--DECLARE @precioTotal DECIMAL(18, 2) = 300;
+--DECLARE @Descuento DECIMAL(5, 2) = 10;
 
-SELECT @PrecioTotal AS PrecioTotal,
-       @Descuento AS Descuento,
-       dbo.TotalConDescuentoEnFactura(@PrecioTotal, @Descuento) AS TotalConDescuento;
+--SELECT @PrecioTotal AS PrecioTotal,
+  --     @Descuento AS Descuento,
+    --   dbo.TotalConDescuentoEnFactura(@PrecioTotal, @Descuento) AS TotalConDescuento;
 
 
 --=======================Factura=======================================------------------
