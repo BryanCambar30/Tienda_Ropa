@@ -1,3 +1,5 @@
+using Microsoft.Data.SqlClient;
+
 namespace TiendaRopa_V1
 {
     public partial class Form1 : Form
@@ -17,11 +19,21 @@ namespace TiendaRopa_V1
         {
             Clases.ConexionSQLServer objetoConexion = new Clases.ConexionSQLServer();
             objetoConexion.establecerConexion();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+            SqlCommand cmd = new SqlCommand("EmpledoValidacion", objetoConexion.establecerConexion)
+            {
+                CommandType = System.Data.CommandType.StoredProcedure
+            };
+            cmd.Parameters.Add("@id_Empleado", System.Data.SqlDbType.Int).Value = textBox3;
+            cmd.Parameters.Add("@contraseña", System.Data.SqlDbType.VarChar, 50).Value = textBox2;
+                SqlDataReader dr = cmd.ExecuteReader();
+                
+            if (dr.Read())
+                {
+                    TiendaRopa_V1.Ventanas.indice Indice = new TiendaRopa_V1.Ventanas.indice();
+                    Indice.Show();
+                    this.Close();
+                }
+                cmd.Connection.Close();
+            }
     }
 }

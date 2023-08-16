@@ -320,7 +320,12 @@ SELECT * FROM detalle_compra
 
 
 --Procedimientos Almacenados
---=====Almacenar automaticamente el producto mas vendido a la tambla 
+
+-- =============================================
+-- Author:		<Bryan Cámbar>
+-- Create date: 08/13/2023
+-- Description: proceso para Almacenar automaticamente el producto mas vendido a la tambla 
+-- =============================================
 CREATE PROCEDURE ActualizarProductosMasVendidos
     @Mes INT,
     @Anio INT
@@ -374,7 +379,12 @@ EXEC ActualizarProductosMasVendidos @mes = 8, @anio = 2023;
     --   dbo.TotalConDescuentoEnFactura(@PrecioTotal, @Descuento) AS TotalConDescuento;
 
 
---=======================Factura=======================================------------------
+--==============================================================------------------
+-- =============================================
+-- Author:		<Bryan Cámbar>
+-- Create date: 08/15/2023
+-- Description: proceso para Facturar 
+-- =============================================
 CREATE TYPE dbo.ProductoDetalleTableType AS TABLE
 (
     codigo_barras VARCHAR(20),
@@ -440,6 +450,30 @@ BEGIN
 	DROP TABLE #ProductosDetalle;
 END
 
+-- =============================================
+-- Author:		<Bryan Cámbar>
+-- Create date: 08/15/2023
+-- Description: proceso para Validar Empleado 
+-- =============================================
+CREATE PROCEDURE EmpledoValidacion
+	@id_empleado integer,
+	@Contraseña varchar(50)
+AS
+BEGIN 
+	DECLARE @password_hash varchar(64);
+	DECLARE @password_salt varchar (25);
+	DECLARE @Password VARCHAR(50);
+	DECLARE @Salt VARCHAR(25);
+	DECLARE @Hash VARCHAR(64);
+	SET @Salt = CONVERT(VARCHAR(36), NEWID());
+	SET @Hash = HASHBYTES('SHA2_256', @Contraseña + @Salt);
+	SET @password_hash = @Hash
+	SET @password_salt = @Salt
+	SELECT * FROM Empleados WHERE id_empleado =@id_empleado AND password_hash = @password_hash
+	
+END
+
+EXEC EmpledoValidacion @id_empleado=2, @contraseña='qwerty123'
 
 --CREATE PROCEDURE ObtenerProductoMasVendido
 	--@Mes int,

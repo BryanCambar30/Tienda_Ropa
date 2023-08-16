@@ -82,3 +82,4 @@ C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\D
 C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.pdb
 C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.genruntimeconfig.cache
 C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\ref\TiendaRopa_V1.dll
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Ventanas.indice.resources
