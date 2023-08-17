@@ -630,3 +630,93 @@ SELECT pr.codigo_barras,dr.nombre_producto,ta.descripcion,ti.descripcion,co.desc
 
 END
 GO
+--==================================FUNCIONES===========================================
+-- =============================================
+-- Author:		<Mario Villanueva>
+-- Create date: <16/08/2023>
+-- Description:	<funcion para obtener la cantidad de ventas de un producto y el monto total vendido
+-- =============================================
+CREATE FUNCTION obtener_cantidad_ventas_producto
+
+(	
+	@F_Codigo_producto VARCHAR (50)
+)
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT dc.producto, SUM(dc.cantidad) CantidadTotalVendida, SUM(dc.cantidad * p.precio) MontoTotalVendido, dr.nombre_producto
+	FROM detalle_compra dc
+	INNER JOIN Productos p ON dc.producto = p.codigo_barras
+	INNER JOIN DetallesRopa dr on dr.id_detalle=p.detalle
+	WHERE p.codigo_barras=@F_Codigo_producto
+	GROUP BY dc.producto,dr.nombre_producto
+	);
+GO
+
+-- =============================================
+-- Author:		<Mario Villanueva>
+-- Create date: <16/08/2023>
+-- Description:	<funcion para obtener la cantidad de compras realizadas por un cliente y el 
+--				promedio de compra>
+-- =============================================
+CREATE FUNCTION obtener_compras_cliente 
+(	
+	@F_id_cliente INTEGER 
+)
+RETURNS TABLE 
+AS
+RETURN 
+(
+		select C.id_clientes,count(f.id_cliente)cantidad_de_compras, avg(pr.precio*dc.cantidad)promedio_de_compra,
+		(p.P_nombre+' '+p.S_nombre+' '+p.P_apellido+' '+p.S_apellido) Cliente
+		from detalle_compra dc 
+		inner join Factura f on f.n_Factura=dc.id_detalleCOmpra
+		inner join Clientes c on c.id_clientes=f.id_cliente
+		inner join Personas p on p.idPersona=c.id_persona
+		inner join Productos pr on pr.codigo_barras=dc.producto
+		where c.id_clientes=@F_id_cliente
+		group by p.P_nombre,p.S_nombre,p.P_apellido,p.S_apellido,C.id_clientes
+	
+
+);
+GO
+-- =============================================
+-- Author:		<mario villanuva>
+-- Create date: <08/16/2023>
+-- Description:	<funcion para buscar a un empleado mediante su id, 
+	-- devuelve la cantidad de ventas realizadas y el monto>
+-- =============================================
+CREATE FUNCTION	obtener_ventas_empleado (@F_id_empleado INTEGER)
+RETURNS TABLE 
+AS
+RETURN 
+(
+select count(f.n_Factura) cantidad_ventas,sum(f.total)monto_ventas,
+(p.P_nombre+' '+p.S_nombre+' '+P_apellido+' '+p.S_apellido)nombre_empleado, p.correo,pt.descripcion
+from Factura f 
+inner join Empleados e on e.id_empleado=f.id_empleado
+inner join Personas p on p.idPersona=e.id_persona
+inner join PuestosTrabajo pt on pt.idPuesto=e.id_puesto
+where f.id_empleado=@F_id_empleado
+group by p.P_nombre,p.S_nombre,P_apellido,p.S_apellido, p.correo,pt.descripcion
+
+);
+GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
