@@ -28,122 +28,135 @@
         /// </summary>
         private void InitializeComponent()
         {
-            menuStrip1 = new MenuStrip();
-            inicioToolStripMenuItem = new ToolStripMenuItem();
-            conectarSqlServerToolStripMenuItem = new ToolStripMenuItem();
-            conectarOracleDBToolStripMenuItem = new ToolStripMenuItem();
-            configuracionToolStripMenuItem = new ToolStripMenuItem();
-            ayudaToolStripMenuItem = new ToolStripMenuItem();
-            button1 = new Button();
-            label2 = new Label();
-            textBox3 = new TextBox();
-            label3 = new Label();
-            textBox2 = new TextBox();
-            menuStrip1.SuspendLayout();
-            SuspendLayout();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.inicioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conectarSqlServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conectarOracleDBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configuracionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txN_Empleado = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txPassword = new System.Windows.Forms.TextBox();
+            this.menuStrip1.SuspendLayout();
+            this.SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.ImageScalingSize = new Size(24, 24);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { inicioToolStripMenuItem, configuracionToolStripMenuItem, ayudaToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(442, 24);
-            menuStrip1.TabIndex = 0;
-            menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.inicioToolStripMenuItem,
+            this.configuracionToolStripMenuItem,
+            this.ayudaToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(631, 35);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
             // 
             // inicioToolStripMenuItem
             // 
-            inicioToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { conectarSqlServerToolStripMenuItem, conectarOracleDBToolStripMenuItem });
-            inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
-            inicioToolStripMenuItem.Size = new Size(48, 20);
-            inicioToolStripMenuItem.Text = "Inicio";
+            this.inicioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.conectarSqlServerToolStripMenuItem,
+            this.conectarOracleDBToolStripMenuItem});
+            this.inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
+            this.inicioToolStripMenuItem.Size = new System.Drawing.Size(70, 29);
+            this.inicioToolStripMenuItem.Text = "Inicio";
             // 
             // conectarSqlServerToolStripMenuItem
             // 
-            conectarSqlServerToolStripMenuItem.Name = "conectarSqlServerToolStripMenuItem";
-            conectarSqlServerToolStripMenuItem.Size = new Size(177, 22);
-            conectarSqlServerToolStripMenuItem.Text = "Conectar SqlServer ";
-            conectarSqlServerToolStripMenuItem.Click += conectarSqlServerToolStripMenuItem_Click_1;
+            this.conectarSqlServerToolStripMenuItem.Name = "conectarSqlServerToolStripMenuItem";
+            this.conectarSqlServerToolStripMenuItem.Size = new System.Drawing.Size(268, 34);
+            this.conectarSqlServerToolStripMenuItem.Text = "Conectar SqlServer ";
             // 
             // conectarOracleDBToolStripMenuItem
             // 
-            conectarOracleDBToolStripMenuItem.Name = "conectarOracleDBToolStripMenuItem";
-            conectarOracleDBToolStripMenuItem.Size = new Size(177, 22);
-            conectarOracleDBToolStripMenuItem.Text = "Conectar Oracle DB";
+            this.conectarOracleDBToolStripMenuItem.Name = "conectarOracleDBToolStripMenuItem";
+            this.conectarOracleDBToolStripMenuItem.Size = new System.Drawing.Size(268, 34);
+            this.conectarOracleDBToolStripMenuItem.Text = "Conectar Oracle DB";
             // 
             // configuracionToolStripMenuItem
             // 
-            configuracionToolStripMenuItem.Name = "configuracionToolStripMenuItem";
-            configuracionToolStripMenuItem.Size = new Size(95, 20);
-            configuracionToolStripMenuItem.Text = "Configuracion";
+            this.configuracionToolStripMenuItem.Name = "configuracionToolStripMenuItem";
+            this.configuracionToolStripMenuItem.Size = new System.Drawing.Size(139, 29);
+            this.configuracionToolStripMenuItem.Text = "Configuracion";
             // 
             // ayudaToolStripMenuItem
             // 
-            ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            ayudaToolStripMenuItem.Size = new Size(53, 20);
-            ayudaToolStripMenuItem.Text = "Ayuda";
+            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
+            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(79, 29);
+            this.ayudaToolStripMenuItem.Text = "Ayuda";
             // 
             // button1
             // 
-            button1.Location = new Point(147, 170);
-            button1.Name = "button1";
-            button1.Size = new Size(130, 23);
-            button1.TabIndex = 1;
-            button1.Text = "Iniciar Secion";
-            button1.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(210, 283);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(186, 38);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Iniciar Secion";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(66, 117);
-            label2.Name = "label2";
-            label2.Size = new Size(57, 15);
-            label2.TabIndex = 5;
-            label2.Text = "Password";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(94, 195);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 25);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Password";
             // 
-            // textBox3
+            // txN_Empleado
             // 
-            textBox3.Location = new Point(147, 63);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(190, 23);
-            textBox3.TabIndex = 6;
+            this.txN_Empleado.Location = new System.Drawing.Point(210, 105);
+            this.txN_Empleado.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txN_Empleado.Name = "txN_Empleado";
+            this.txN_Empleado.Size = new System.Drawing.Size(270, 31);
+            this.txN_Empleado.TabIndex = 6;
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(46, 66);
-            label3.Name = "label3";
-            label3.Size = new Size(77, 15);
-            label3.TabIndex = 7;
-            label3.Text = "N° Empleado";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(66, 110);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(117, 25);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "N° Empleado";
             // 
-            // textBox2
+            // txPassword
             // 
-            textBox2.Location = new Point(147, 114);
-            textBox2.Name = "textBox2";
-            textBox2.PasswordChar = '*';
-            textBox2.Size = new Size(190, 23);
-            textBox2.TabIndex = 3;
+            this.txPassword.Location = new System.Drawing.Point(210, 190);
+            this.txPassword.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txPassword.Name = "txPassword";
+            this.txPassword.PasswordChar = '*';
+            this.txPassword.Size = new System.Drawing.Size(270, 31);
+            this.txPassword.TabIndex = 3;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(442, 247);
-            Controls.Add(label3);
-            Controls.Add(textBox3);
-            Controls.Add(label2);
-            Controls.Add(textBox2);
-            Controls.Add(button1);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
-            Name = "Form1";
-            Text = "Login";
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(631, 412);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txN_Empleado);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txPassword);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "Form1";
+            this.Text = "Login";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -156,8 +169,8 @@
         private ToolStripMenuItem conectarOracleDBToolStripMenuItem;
         private Button button1;
         private Label label2;
-        private TextBox textBox3;
+        private TextBox txN_Empleado;
         private Label label3;
-        private TextBox textBox2;
+        private TextBox txPassword;
     }
 }

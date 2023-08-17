@@ -207,6 +207,12 @@ CREATE TABLE detalle_compra(
 ALTER TABLE detalle_compra
 ADD PrecioProducto DECIMAL(10,2)
 
+-------------------------------------------------------
+ALTER TABLE Producto_mas_vendido
+DROP COLUMN mes, anio;
+ALTER TABLE Producto_mas_vendido
+ADD Fecha DATETIME;
+Drop table Producto_mas_vendido
 CREATE TABLE Producto_mas_vendido(
 	id_Producto VARCHAR (20) PRIMARY KEY,
 	cantidad INTEGER NOT NULL,
@@ -214,8 +220,6 @@ CREATE TABLE Producto_mas_vendido(
 	CONSTRAINT fk_id_producto_mas_vendido FOREIGN KEY (id_producto) REFERENCES productos(codigo_barras)
 	)
 
-ALTER TABLE Producto_mas_vendido
-ADD Fecha DATETIME NULL;
 
 ALTER TABLE Empleados
 ADD password_hash VARCHAR(64), password_salt VARCHAR(25);
@@ -340,14 +344,14 @@ BEGIN
     TRUNCATE TABLE producto_mas_vendido; -- Borra los datos existentes en la tabla producto_mas_vendido
 
     INSERT INTO producto_mas_vendido (id_Producto, Cantidad, Fecha ) -- Insertar nuevos datos desde la tabla Factura
-    SELECT TOP 50
+    SELECT TOP 5
         DC.Producto,
         SUM(DC.Cantidad) AS Cantidad,
 		F.fecha_hora
     FROM detalle_compra DC
 	INNER JOIN Factura F ON dc.n_factura = f.n_Factura
 	INNER JOIN (Productos INNER JOIN DetallesRopa ON detalle = id_detalle) ON producto = codigo_barras
-    WHERE fecha_hora >= @FechaInicio AND fecha_hora < @FechaFin
+    WHERE F.fecha_hora >= @FechaInicio AND fecha_hora < @FechaFin
     GROUP BY producto, nombre_producto, F.fecha_hora
     ORDER BY Cantidad DESC;
 
@@ -417,17 +421,17 @@ BEGIN
     INSERT INTO #ProductosDetalle(codigo_barras, Cantidad)
     SELECT codigo_barras, Cantidad
     FROM @ProductosDetalle;
-
-	INSERT INTO Factura F (id_cliente, id_empleado, id_local, fecha_hora)
-	VALUES (@cliente_id, @empleado_id, @id_local, GETDATE());
-
+	
+	
+	INSERT INTO Factura (id_cliente, id_empleado, id_local, fecha_hora, monto_pagado, cambio, sub_total, gravado15, total)
+	VALUES (@cliente_id, @empleado_id, @id_local, GETDATE(), @TotalPagado, 0, 0, 0, 0);
 	SET @Factura_id = SCOPE_IDENTITY(); --OBTIENE EL NUMERO DE FACTURA RECIEN HECHA O INSERTADA
 
 	INSERT INTO detalle_compra(n_factura, producto, cantidad, PrecioProducto)
 	SELECT @Factura_id, PD.codigo_barras, PD.Cantidad, P.Precio
 	FROM #ProductosDetalle PD
 	INNER JOIN Productos P ON PD.codigo_barras = P.codigo_barras;
-
+	
 	SET @Subtotal = (SELECT SUM(cantidad * PrecioProducto) FROM detalle_compra WHERE n_factura = @Factura_id); --calcucla el sub total sin el isv 
 
 	set @ISV = @Subtotal * (@Gravado / 100); --clacula impuesto sobre la venta, no esta sujeto a que sea del 15 por que se puede cambiar en el futuro
@@ -437,10 +441,13 @@ BEGIN
 	SET @TotalConDescuento = @Total - (@Total * (@Descuento / 100));
 	
 	SET @Total = @TotalConDescuento
+
+	set @Cambio = @TotalPagado - @Total
  
 	
 	UPDATE Factura
-	SET sub_total = @Subtotal,
+	SET cambio = @cliente_id,
+		sub_total = @Subtotal,
 		gravado15 = @ISV,
 		total = @Total
 	WHERE n_Factura = @Factura_id
@@ -455,7 +462,7 @@ END
 -- Create date: 08/15/2023
 -- Description: proceso para Validar Empleado 
 -- =============================================
-CREATE PROCEDURE EmpledoValidacion
+CREATE PROCEDURE EmpleadoValidacion
 	@id_empleado integer,
 	@Contraseña varchar(50)
 AS
@@ -465,15 +472,17 @@ BEGIN
 	DECLARE @Password VARCHAR(50);
 	DECLARE @Salt VARCHAR(25);
 	DECLARE @Hash VARCHAR(64);
+	SET @Password = @Contraseña;
 	SET @Salt = CONVERT(VARCHAR(36), NEWID());
-	SET @Hash = HASHBYTES('SHA2_256', @Contraseña + @Salt);
+	SET @Hash = HASHBYTES('SHA2_256', @Password + @Salt);
 	SET @password_hash = @Hash
 	SET @password_salt = @Salt
 	SELECT * FROM Empleados WHERE id_empleado =@id_empleado AND password_hash = @password_hash
 	
 END
 
-EXEC EmpledoValidacion @id_empleado=2, @contraseña='qwerty123'
+EXEC EmpleadoValidacion @id_empleado=2, @contraseña='Qwerty123'
+Select * from Empleados
 
 --CREATE PROCEDURE ObtenerProductoMasVendido
 	--@Mes int,

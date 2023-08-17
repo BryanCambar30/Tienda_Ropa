@@ -7,6 +7,9 @@
     <Compile Update="Ventanas\indice.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Ventanas\NewCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Ventanas\New_Empleado.cs">
       <SubType>Form</SubType>
     </Compile>
