@@ -4,6 +4,12 @@
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Ventanas\ClientesCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ventanas\EmpleadoVentas.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Ventanas\indice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -11,6 +17,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Ventanas\New_Empleado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ventanas\ProdcutoMasVendido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Ventanas\ProductoNuevo.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

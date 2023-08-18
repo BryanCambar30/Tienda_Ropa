@@ -87,3 +87,7 @@ C:\Users\CypherCaius\Desktop\Bases I\Tienda_Ropa\TiendaRopa_v1\obj\Debug\net6.0-
 C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Ventanas.New_Empleado.resources
 C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Ventanas.NewCliente.resources
 C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Ventanas.Factura.resources
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Ventanas.ProdcutoMasVendido.resources
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Ventanas.EmpleadoVentas.resources
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Ventanas.ClientesCompras.resources
+C:\Users\bryan\Desktop\Bases de Datos I\Proyecto\Tienda_Ropa\TiendaRopa_V1\obj\Debug\net6.0-windows\TiendaRopa_V1.Ventanas.ProductoNuevo.resources

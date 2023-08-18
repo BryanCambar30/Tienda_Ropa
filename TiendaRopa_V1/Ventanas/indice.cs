@@ -168,7 +168,7 @@ namespace TiendaRopa_V1.Ventanas
         {
             TiendaRopa_V1.Ventanas.New_Empleado new_Empleado = new TiendaRopa_V1.Ventanas.New_Empleado();
             new_Empleado.Show();
-            this.Hide();
+            this.Close();
             conexion.cn.Close();
         }
 
@@ -176,7 +176,56 @@ namespace TiendaRopa_V1.Ventanas
         {
             TiendaRopa_V1.Ventanas.NewCliente newCliente = new TiendaRopa_V1.Ventanas.NewCliente();
             newCliente.Show();
-            this.Hide();
+            this.Close();
+            conexion.cn.Close();
+        }
+
+        private void productoMasVendidoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TiendaRopa_V1.Ventanas.ProdcutoMasVendido ProductoMes = new TiendaRopa_V1.Ventanas.ProdcutoMasVendido();
+            ProductoMes.Show();
+            this.Close();
+            conexion.cn.Close();
+        }
+
+        private void buscarEmpleadoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TiendaRopa_V1.Ventanas.EmpleadoVentas EmpleadosVentas = new TiendaRopa_V1.Ventanas.EmpleadoVentas();
+            EmpleadosVentas.Show();
+            conexion.cn.Close();
+        }
+
+        private void Cancelar_Click(object sender, EventArgs e)
+        {
+            this.txtProducto.Clear();
+            this.txtCantidad.Clear();
+            this.txtDescuento.Clear();
+            this.txtGravado.Clear();
+            this.txtTotalPagado.Clear();
+            this.cbCliente.SelectedIndex = 0;
+            this.cbEmpleado.SelectedIndex = 0;
+            this.cbLocal.SelectedIndex = 0;
+        }
+
+        private void buscarClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TiendaRopa_V1.Ventanas.ClientesCompras CLienteCompras = new TiendaRopa_V1.Ventanas.ClientesCompras();
+            CLienteCompras.Show();
+            this.Close();
+            conexion.cn.Close();
+
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            TiendaRopa_V1.Ventanas.ProductoNuevo ProductoAdd = new TiendaRopa_V1.Ventanas.ProductoNuevo();
+            ProductoAdd.Show();
+            this.Close();
             conexion.cn.Close();
         }
     }
