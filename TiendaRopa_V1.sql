@@ -712,7 +712,43 @@ group by p.P_nombre,p.S_nombre,P_apellido,p.S_apellido, p.correo,pt.descripcion
 
 );
 GO
-
+-- =============================================
+-- Author:		<Mario villanueva>
+-- Create date: <19/08/2023>
+-- Description:	<funcion para calcular el precio promedio de los productos>
+-- =============================================
+	CREATE FUNCTION CalcularPrecioPromedioProductos()
+RETURNS DECIMAL(10, 2)
+AS
+BEGIN
+    DECLARE @PrecioPromedio DECIMAL(10, 2)
+    
+    SELECT @PrecioPromedio = AVG(Precio)
+    FROM Productos
+    
+    RETURN @PrecioPromedio
+END;
+-- =============================================
+-- Author:		mario villanueva
+-- Create date: 17/08/2023
+-- Description:	obtener el estado de un producto en inventario (disponible o agotado)
+-- =============================================
+CREATE FUNCTION Obtener_Estado_Producto(@productoId VARCHAR(20))
+RETURNS VARCHAR(20)
+AS
+BEGIN
+    DECLARE @estado VARCHAR(20);
+    
+    SELECT @estado =
+        CASE
+            WHEN i.cantidad_disponible > 0 THEN 'disponible'
+            ELSE 'agotado'
+        END
+    FROM Inventario i
+    WHERE i.producto = @productoId;
+    
+    RETURN @estado;
+END;
 
 
 
