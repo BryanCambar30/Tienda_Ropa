@@ -750,6 +750,19 @@ BEGIN
     RETURN @estado;
 END;
 
+--INDEX
+	CREATE NONCLUSTERED INDEX indexCliente ON Clientes (id_clientes asc)
+	CREATE NONCLUSTERED INDEX idxEmpleado ON empleados (id_empleado)
+	CREATE NONCLUSTERED INDEX idxProducto ON Productos (codigo_barras)
+	CREATE NONCLUSTERED INDEX idxMunicipios ON Municipios (idMuncipio asc)
+
+--CHECK 	
+	ALTER TABLE empleados
+	ADD CONSTRAINT CHK_Salario CHECK (Salario >= 0)
+
+	ALTER TABLE Productos
+	ADD CONSTRAINT CHK_Precio CHECK (Precio > 0);
+	
 
 
 
