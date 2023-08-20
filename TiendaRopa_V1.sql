@@ -797,6 +797,28 @@ RETURN
 SELECT *
 FROM dbo.ObtenerContenidoTablaConSumaYCantidad('detalle_compra');
 
+-- =============================================
+-- Author:		<Mario Villanueva>
+-- Create date: <20/08/2023>
+-- Description:	<proceso para eliminar un cliente mediante su id>
+-- =============================================
+
+CREATE PROCEDURE eliminar_cliente
+    @cliente_id INT
+AS
+BEGIN
+    SET NOCOUNT ON;--opcional 
+	
+	--se debe eliminar registros relacionados en otras tablas que hacen referencia al cliente
+    --para eliminar registros en la tabla detalle_compra ya que tiene relacion con la factura y el cliente
+    DELETE FROM detalle_compra WHERE n_factura IN (SELECT n_Factura FROM Factura WHERE id_cliente = @cliente_id);
+
+    -- para eliminar facturas relacionadas con el cliente
+	 DELETE FROM Factura WHERE id_cliente = @cliente_id;
+ 
+    -- eliminar el cliente de la tabla principal Clientes
+    DELETE FROM Clientes WHERE id_clientes = @cliente_id;
+END;
 
 
 
