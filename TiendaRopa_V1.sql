@@ -314,6 +314,7 @@ SELECT * FROM DetallesRopa
 SELECT * fROM Productos
 SELECT * FROM Sucursales
 SELECT * FROM PuestosTrabajo
+select * from Personas
 SELECT * FROM Clientes 
 SELECT * FROM Empleados
 SELECT * FROM Bodega 

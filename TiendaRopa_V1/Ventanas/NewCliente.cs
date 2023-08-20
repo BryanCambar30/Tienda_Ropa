@@ -98,11 +98,11 @@ namespace TiendaRopa_V1.Ventanas
 
                     if (result == 1)
                     {
-                        MessageBox.Show("Ingresado con exito.");
+                         MessageBox.Show("Hubo un error en el guardado de datos.");
                     }
                     else
                     {
-                        MessageBox.Show("Hubo un error en el guardado de datos.");
+                       MessageBox.Show("Ingresado con exito.");
                     }
                     conexion.cn.Close();
                 }
@@ -116,8 +116,14 @@ namespace TiendaRopa_V1.Ventanas
 
         private void Cancelar_Click(object sender, EventArgs e)
         {
-            //this.txP_Apellido = this.txS_Apellido = this.txP_Nombre = this.txS_Nombre = this.Correo = "";
-            //this.cbGenero = this.cbLugarNacimineto = this.cbprofesion = 0;
+            this.txP_Nombre.Clear();
+            this.txS_Nombre.Clear();
+            this.txP_Apellido.Clear();
+            this.txS_Apellido.Clear();
+            this.Correo.Clear();
+            this.cbGenero.SelectedIndex = 0;
+            this.cbLugarNacimineto.SelectedIndex = 0;
+            this.cbprofesion.SelectedIndex = 0;
             this.Tipo_Mayoritario.Checked = false;
 
         }

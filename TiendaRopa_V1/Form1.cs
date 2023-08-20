@@ -55,5 +55,10 @@ namespace TiendaRopa_V1
                 objetoConexion.cn.Close();
             }
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }      
 }

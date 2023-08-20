@@ -232,6 +232,14 @@ namespace TiendaRopa_V1.Ventanas
         {
             
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            TiendaRopa_V1.Form1 Fectura = new TiendaRopa_V1.Form1();
+            Fectura.Show();
+            this.Close();
+            conexion.cn.Close();
+        }
     }
 }
 
