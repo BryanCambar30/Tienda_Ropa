@@ -229,8 +229,8 @@ DECLARE @Salt VARCHAR(25);
 DECLARE @Hash VARCHAR(64);
 
 SET @Password = 'Qwerty123';
-SET @Salt = CONVERT(VARCHAR(36), NEWID());
-SET @Hash = HASHBYTES('SHA2_256', @Password + @Salt);
+SET @Salt = CONVERT(VARCHAR(36))--, NEWID());
+SET @Hash = HASHBYTES('SHA2_256', @Password) --+ @Salt);
 
 UPDATE Empleados
 SET password_hash = @Hash, password_salt = @Salt
@@ -316,8 +316,7 @@ SELECT * FROM Sucursales
 SELECT * FROM PuestosTrabajo
 SELECT * FROM Clientes 
 SELECT * FROM Empleados
-SELECT * FROM Bodega
-SELECT * FROM Inventario
+SELECT * FROM Bodega 
 SELECT * FROM Producto_mas_vendido
 SELECT * FROM Factura
 SELECT * FROM detalle_compra
@@ -416,6 +415,7 @@ BEGIN
 		codigo_barras varchar(20),
 		Cantidad int
 	)
+	
 	BEGIN TRANSACTION;
 	
     INSERT INTO #ProductosDetalle(codigo_barras, Cantidad)
@@ -763,14 +763,38 @@ END;
 	ALTER TABLE Productos
 	ADD CONSTRAINT CHK_Precio CHECK (Precio > 0);
 	
+-- =============================================
+-- Author:		Bryan Cambar
+-- Create date: 17/08/2023
+-- Description:	obtener informacionde los productos para la factura antes de realizar la factura
+-- =============================================
 
+CREATE FUNCTION ObtenerContenidoTablaConSumaYCantidad
+(
+    @detalle_compra NVARCHAR(100)
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+		F.n_Factura,
+		p.detalle,
+		p.precio,
+		DC.cantidad,
+	    DC.producto,
+        DC.PrecioProducto,
+        SUM(DC.PrecioProducto * DC.cantidad) AS SumaPrecioProductos,
+        COUNT(DC.cantidad) AS CantidadProductos
+    FROM
+        detalle_compra DC inner join Factura F on DC.n_factura = F.n_Factura
+		inner join Productos P on DC.producto = P.codigo_barras
+    GROUP BY
+        DC.cantidad, DC.producto, DC.PrecioProducto, F.n_Factura, p.detalle, p.precio
+);
 
-
-
-
-
-
-
+SELECT *
+FROM dbo.ObtenerContenidoTablaConSumaYCantidad('detalle_compra');
 
 
 

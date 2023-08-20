@@ -143,6 +143,8 @@ namespace TiendaRopa_V1.Ventanas
                 if (string.IsNullOrEmpty(txtCodigoBarras.Text) == false)
                 {
                     conexion.cn.Open();
+                    SqlCommand Identity_insert = new SqlCommand("SET IDENTITY_INSERT Productos ON;", conexion.cn);
+                    int resultado = Identity_insert.ExecuteNonQuery();
                     SqlCommand cmd = new SqlCommand("RegistrarProducto_AgregarInventario", conexion.cn)
                     {
                         CommandType = System.Data.CommandType.StoredProcedure
@@ -161,7 +163,7 @@ namespace TiendaRopa_V1.Ventanas
                     cmd.Parameters.Add("@nombre_producto", System.Data.SqlDbType.VarChar).Value = this.txtNombreP.Text.Trim();
 
                     int result = cmd.ExecuteNonQuery();
-
+                    
                     if (result == 1)
                     {
                         MessageBox.Show("Hubo un error en el guardado de datos.");

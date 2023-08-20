@@ -36,12 +36,12 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agregarEmpleadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agregarClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.buscarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buscarEmpleadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buscarClienteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productoMasVendidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -52,7 +52,6 @@
             this.cbLocal = new System.Windows.Forms.ComboBox();
             this.cbEmpleado = new System.Windows.Forms.ComboBox();
             this.txtProducto = new System.Windows.Forms.TextBox();
-            this.LabelPrecio = new System.Windows.Forms.Label();
             this.txtCantidad = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txtGravado = new System.Windows.Forms.TextBox();
@@ -60,8 +59,10 @@
             this.txtTotalPagado = new System.Windows.Forms.TextBox();
             this.Facturar = new System.Windows.Forms.Button();
             this.Cancelar = new System.Windows.Forms.Button();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvDetalleFactura = new System.Windows.Forms.DataGridView();
+            this.Agregar = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleFactura)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -89,7 +90,7 @@
             this.buscarToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(522, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1504, 33);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -113,16 +114,23 @@
             // agregarEmpleadoToolStripMenuItem
             // 
             this.agregarEmpleadoToolStripMenuItem.Name = "agregarEmpleadoToolStripMenuItem";
-            this.agregarEmpleadoToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.agregarEmpleadoToolStripMenuItem.Size = new System.Drawing.Size(263, 34);
             this.agregarEmpleadoToolStripMenuItem.Text = "Agregar Empleado";
             this.agregarEmpleadoToolStripMenuItem.Click += new System.EventHandler(this.agregarEmpleadoToolStripMenuItem_Click);
             // 
             // agregarClienteToolStripMenuItem
             // 
             this.agregarClienteToolStripMenuItem.Name = "agregarClienteToolStripMenuItem";
-            this.agregarClienteToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.agregarClienteToolStripMenuItem.Size = new System.Drawing.Size(263, 34);
             this.agregarClienteToolStripMenuItem.Text = "Agregar Cliente";
             this.agregarClienteToolStripMenuItem.Click += new System.EventHandler(this.agregarClienteToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(263, 34);
+            this.toolStripMenuItem1.Text = "Agregar Producto";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // buscarToolStripMenuItem
             // 
@@ -158,25 +166,16 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(61, 394);
+            this.label2.Location = new System.Drawing.Point(532, 193);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 25);
             this.label2.TabIndex = 8;
             this.label2.Text = "Producto";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(86, 445);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(60, 25);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Precio";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(68, 496);
+            this.label4.Location = new System.Drawing.Point(539, 262);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(83, 25);
             this.label4.TabIndex = 10;
@@ -212,7 +211,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(41, 720);
+            this.label8.Location = new System.Drawing.Point(1032, 259);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(114, 25);
             this.label8.TabIndex = 14;
@@ -221,7 +220,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(55, 643);
+            this.label9.Location = new System.Drawing.Point(1046, 193);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(96, 25);
             this.label9.TabIndex = 15;
@@ -253,23 +252,14 @@
             // 
             // txtProducto
             // 
-            this.txtProducto.Location = new System.Drawing.Point(211, 391);
+            this.txtProducto.Location = new System.Drawing.Point(682, 190);
             this.txtProducto.Name = "txtProducto";
             this.txtProducto.Size = new System.Drawing.Size(182, 31);
             this.txtProducto.TabIndex = 19;
             // 
-            // LabelPrecio
-            // 
-            this.LabelPrecio.AutoSize = true;
-            this.LabelPrecio.Location = new System.Drawing.Point(227, 445);
-            this.LabelPrecio.Name = "LabelPrecio";
-            this.LabelPrecio.Size = new System.Drawing.Size(69, 25);
-            this.LabelPrecio.TabIndex = 20;
-            this.LabelPrecio.Text = "label10";
-            // 
             // txtCantidad
             // 
-            this.txtCantidad.Location = new System.Drawing.Point(211, 493);
+            this.txtCantidad.Location = new System.Drawing.Point(682, 259);
             this.txtCantidad.Name = "txtCantidad";
             this.txtCantidad.Size = new System.Drawing.Size(182, 31);
             this.txtCantidad.TabIndex = 21;
@@ -278,7 +268,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(72, 565);
+            this.label11.Location = new System.Drawing.Point(543, 340);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(79, 25);
             this.label11.TabIndex = 22;
@@ -286,7 +276,7 @@
             // 
             // txtGravado
             // 
-            this.txtGravado.Location = new System.Drawing.Point(211, 562);
+            this.txtGravado.Location = new System.Drawing.Point(682, 337);
             this.txtGravado.Name = "txtGravado";
             this.txtGravado.Size = new System.Drawing.Size(182, 31);
             this.txtGravado.TabIndex = 23;
@@ -294,7 +284,7 @@
             // 
             // txtDescuento
             // 
-            this.txtDescuento.Location = new System.Drawing.Point(211, 640);
+            this.txtDescuento.Location = new System.Drawing.Point(1202, 190);
             this.txtDescuento.Name = "txtDescuento";
             this.txtDescuento.Size = new System.Drawing.Size(182, 31);
             this.txtDescuento.TabIndex = 24;
@@ -302,7 +292,7 @@
             // 
             // txtTotalPagado
             // 
-            this.txtTotalPagado.Location = new System.Drawing.Point(211, 717);
+            this.txtTotalPagado.Location = new System.Drawing.Point(1202, 256);
             this.txtTotalPagado.Name = "txtTotalPagado";
             this.txtTotalPagado.Size = new System.Drawing.Size(182, 31);
             this.txtTotalPagado.TabIndex = 25;
@@ -310,17 +300,17 @@
             // 
             // Facturar
             // 
-            this.Facturar.Location = new System.Drawing.Point(110, 832);
+            this.Facturar.Location = new System.Drawing.Point(1019, 335);
             this.Facturar.Name = "Facturar";
             this.Facturar.Size = new System.Drawing.Size(112, 34);
             this.Facturar.TabIndex = 26;
-            this.Facturar.Text = "Facturar";
+            this.Facturar.Text = "Agregar";
             this.Facturar.UseVisualStyleBackColor = true;
             this.Facturar.Click += new System.EventHandler(this.Facturar_Click);
             // 
             // Cancelar
             // 
-            this.Cancelar.Location = new System.Drawing.Point(299, 832);
+            this.Cancelar.Location = new System.Drawing.Point(1172, 335);
             this.Cancelar.Name = "Cancelar";
             this.Cancelar.Size = new System.Drawing.Size(112, 34);
             this.Cancelar.TabIndex = 28;
@@ -328,18 +318,33 @@
             this.Cancelar.UseVisualStyleBackColor = true;
             this.Cancelar.Click += new System.EventHandler(this.Cancelar_Click);
             // 
-            // toolStripMenuItem1
+            // dgvDetalleFactura
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
-            this.toolStripMenuItem1.Text = "Agregar Producto";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.dgvDetalleFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDetalleFactura.Location = new System.Drawing.Point(34, 406);
+            this.dgvDetalleFactura.Name = "dgvDetalleFactura";
+            this.dgvDetalleFactura.RowHeadersWidth = 62;
+            this.dgvDetalleFactura.RowTemplate.Height = 33;
+            this.dgvDetalleFactura.Size = new System.Drawing.Size(1432, 336);
+            this.dgvDetalleFactura.TabIndex = 29;
+            // 
+            // Agregar
+            // 
+            this.Agregar.Location = new System.Drawing.Point(1325, 335);
+            this.Agregar.Name = "Agregar";
+            this.Agregar.Size = new System.Drawing.Size(112, 34);
+            this.Agregar.TabIndex = 30;
+            this.Agregar.Text = "Facturar";
+            this.Agregar.UseVisualStyleBackColor = true;
+            this.Agregar.Click += new System.EventHandler(this.button1_Click);
             // 
             // Factura
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 912);
+            this.ClientSize = new System.Drawing.Size(1504, 780);
+            this.Controls.Add(this.Agregar);
+            this.Controls.Add(this.dgvDetalleFactura);
             this.Controls.Add(this.Cancelar);
             this.Controls.Add(this.Facturar);
             this.Controls.Add(this.txtTotalPagado);
@@ -347,7 +352,6 @@
             this.Controls.Add(this.txtGravado);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.txtCantidad);
-            this.Controls.Add(this.LabelPrecio);
             this.Controls.Add(this.txtProducto);
             this.Controls.Add(this.cbEmpleado);
             this.Controls.Add(this.cbLocal);
@@ -358,7 +362,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.label1);
@@ -368,6 +371,7 @@
             this.Load += new System.EventHandler(this.Factura_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleFactura)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -387,7 +391,6 @@
         private ToolStripMenuItem buscarClienteToolStripMenuItem;
         private ToolStripMenuItem productoMasVendidoToolStripMenuItem;
         private Label label2;
-        private Label label3;
         private Label label4;
         private Label label5;
         private Label label6;
@@ -398,7 +401,6 @@
         private ComboBox cbLocal;
         private ComboBox cbEmpleado;
         private TextBox txtProducto;
-        private Label LabelPrecio;
         private TextBox txtCantidad;
         private Label label11;
         private TextBox txtGravado;
@@ -407,5 +409,7 @@
         private Button Facturar;
         private Button Cancelar;
         private ToolStripMenuItem toolStripMenuItem1;
+        private DataGridView dgvDetalleFactura;
+        private Button Agregar;
     }
 }

@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
+using System.Drawing.Printing;
 
 namespace TiendaRopa_V1.Ventanas
 {
@@ -18,6 +20,12 @@ namespace TiendaRopa_V1.Ventanas
             InitializeComponent();
         }
         Clases.ConexionSQLServer conexion = new Clases.ConexionSQLServer();
+        double cantidad = 0;
+        double precio = 0;
+        double decuecuento_producto = 0;
+        double ISV = 0;
+        double subTotal_producto = 0;
+
         private bool ValidarCamposNumericos(char caracter)
         {
             if ((caracter >= 48 && caracter <= 57) || (caracter == 8))
@@ -156,6 +164,16 @@ namespace TiendaRopa_V1.Ventanas
                 }
                 conexion.cn.Close();
             }
+                conexion.cn.Open();
+                SqlCommand command = new SqlCommand("SELECT TOP 1 * FROM Factura ORDER BY fecha_hora DESC;", conexion.cn);
+                command.Parameters.AddWithValue("@F_id_cliente", cbCliente.SelectedValue);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                dgvDetalleFactura.DataSource = dataTable;
+                conexion.cn.Close();
             }
             catch (Exception ex)
             {
@@ -227,6 +245,34 @@ namespace TiendaRopa_V1.Ventanas
             ProductoAdd.Show();
             this.Close();
             conexion.cn.Close();
+        }
+
+
+
+       private void button1_Click(object sender, EventArgs e)
+        {
+            conexion.cn.Open();
+            SqlCommand command = new SqlCommand();
+            command.Connection = conexion.cn;
+            string sqlQuery = "UPDATE TOP(1) Factura SET monto_pagado = @MontoPagado WHERE N_fACTURA =(SELECT MAX(n_factura) FROM Factura)  UPDATE TOP(1) Factura SET cambio = monto_pagado - total WHERE N_fACTURA =(SELECT MAX(n_factura) FROM Factura)";
+            command.Parameters.AddWithValue("@MontoPagado", txtTotalPagado.Text);
+            command.CommandText = sqlQuery;
+            command.ExecuteNonQuery();
+
+            SqlCommand commando = new SqlCommand("SELECT TOP 1 * FROM Factura ORDER BY fecha_hora DESC;", conexion.cn);
+            
+
+            SqlDataAdapter adapter = new SqlDataAdapter(commando);
+            DataTable dataTable = new DataTable();
+            adapter.Fill(dataTable);
+
+            dgvDetalleFactura.DataSource = dataTable;
+            conexion.cn.Close();
+        }
+
+        private void estadoProductoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
