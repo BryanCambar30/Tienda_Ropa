@@ -844,8 +844,8 @@ BEGIN
 END;
 
 --prueba eliminar
-execute eliminar_empleado @P_empleado_id=1
-execute eliminar_cliente  @cliente_id =1
+--execute eliminar_empleado @P_empleado_id=1
+--execute eliminar_cliente  @cliente_id =1
 
 
 
