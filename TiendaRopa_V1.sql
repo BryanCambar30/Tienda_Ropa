@@ -848,6 +848,59 @@ END;
 --execute eliminar_cliente  @cliente_id =1
 
 
+--===============================MERGE===========================================
+-- Author:	<Mario Villanueva>
+-- Create date: <20/08/2023>
+-- Description:	<Merge para agregar nuevas sucursales y actualizar sucursales>
+-- =============================================
+
+--1. CREAR NUEVA TABLA PARA LAS NUEVAS SUCURSALES 
+
+CREATE TABLE SucursalesNuevas(
+idLocalNuevo INTEGER PRIMARY KEY,
+idMuncipio INTEGER NOT NULL,
+horaApertura TIME NOT NULL, 
+horaCierre TIME NOT NULL, 
+telefono VARCHAR (8) NOT NULL,
+eMail VARCHAR (50) NULL,
+cai VARCHAR(25) NOT NULL,
+razonSocial VARCHAR (100),
+es_casa_matriz BIT,
+CONSTRAINT FK_sucurNueva_mun FOREIGN KEY (idMuncipio) REFERENCES Municipios(idMuncipio)
+);
+
+-- 2. insertar estos datos para probar el merge 
+-- se modifica la sucursal con id 4 y 5, y se agrega un nueva suscursal 
+ 
+INSERT INTO SucursalesNuevas (idLocalNuevo, idMuncipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz) VALUES 
+ (6, 3, '07:45:00', '19:00:00', '11223344', 'sucursal3@example.com', 'KLMNO54321', 'Sucursal H', 0), 
+ (4, 4, '08:15:00', '17:15:00', '77665544', 'sucursal4@example.com', 'PQRST67890', 'Sucursal G', 1),
+ (5, 5, '09:00:00', '18:00:00', '99001122', 'sucursal5@example.com', 'UVWXYZ12345', 'Sucursal F', 0);
+
+ --3. ejecutar el merge 
+ -- En caso de ingresar una sucursal nueva se agrega a la tabla sucursales
+ -- En caso de agregar una sucursal y que el id haga match (coincide con el id de sucursal)
+ -- se modificaria la sucursal existente con los valores de la nueva sucursal 
+
+MERGE INTO Sucursales AS Target
+USING SucursalesNuevas AS Source
+ON Target.idLocal = Source.idLocalNuevo
+
+WHEN MATCHED THEN
+    UPDATE SET
+        Target.idMuncipio = Source.idMuncipio,
+        Target.horaApertura = Source.horaApertura,
+        Target.horaCierre = Source.horaCierre,
+        Target.telefono = Source.telefono,
+        Target.eMail = Source.eMail,
+        Target.cai = Source.cai,
+        Target.razonSocial = Source.razonSocial,
+        Target.es_casa_matriz = Source.es_casa_matriz
+
+WHEN NOT MATCHED BY TARGET THEN
+    INSERT (idLocal, idMuncipio, horaApertura, horaCierre, telefono, eMail, cai, razonSocial, es_casa_matriz)
+    VALUES (Source.idLocalNuevo, Source.idMuncipio, Source.horaApertura, Source.horaCierre, Source.telefono, Source.eMail, Source.cai, Source.razonSocial, Source.es_casa_matriz);
+
 
 
 
